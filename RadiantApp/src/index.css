@@ -1,0 +1,83 @@
+/* stylelint-disable at-rule-no-unknown */
+/* If you're using a different linter, adapt or remove this comment. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer utilities {
+  body {
+    @apply bg-gradient-valorant text-valorant_light font-valorant;
+  }
+
+  /* Custom Valorant Components */
+  .valorant-btn {
+    @apply px-6 py-2 bg-gradient-accent text-white font-semibold rounded-lg transition-valorant 
+      hover:shadow-valorant hover:scale-105 active:scale-95;
+  }
+
+  .valorant-btn-secondary {
+    @apply px-6 py-2 border-2 border-valorant-accent text-valorant-accent font-semibold rounded-lg 
+      transition-valorant hover:bg-valorant-accent hover:text-white;
+  }
+
+  .valorant-card {
+    @apply bg-valorant-secondary border border-valorant-accent border-opacity-20 rounded-lg 
+      p-4 transition-valorant hover:shadow-valorant hover:border-opacity-100;
+  }
+
+  .valorant-input {
+    @apply w-full px-4 py-2 bg-valorant-secondary border border-valorant_light border-opacity-20 
+      rounded-lg text-valorant_light placeholder-valorant_light placeholder-opacity-40 
+      focus:outline-none focus:border-valorant-accent focus:shadow-valorant transition-valorant;
+  }
+}
+
+/* Animations */
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(255, 70, 85, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(255, 70, 85, 0.8), 0 0 20px rgba(255, 70, 85, 0.5);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-slide-in {
+  animation: slide-in 0.6s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
