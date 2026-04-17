@@ -1,8 +1,6 @@
-/* stylelint-disable at-rule-no-unknown */
-/* If you're using a different linter, adapt or remove this comment. */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,32 +10,81 @@ html {
   scroll-behavior: smooth;
 }
 
-@layer utilities {
-  body {
-    @apply bg-gradient-valorant text-valorant_light font-valorant;
-  }
+body {
+  background: linear-gradient(135deg, #0F1419 0%, #1A1F2E 100%);
+  color: #C9C9C9;
+  font-family: Inter, system-ui, sans-serif;
+}
 
-  /* Custom Valorant Components */
-  .valorant-btn {
-    @apply px-6 py-2 bg-gradient-accent text-white font-semibold rounded-lg transition-valorant 
-      hover:shadow-valorant hover:scale-105 active:scale-95;
-  }
+/* Custom Valorant Components */
+.valorant-btn {
+  padding: 0.5rem 1.5rem;
+  background: linear-gradient(135deg, #FF4655 0%, #FF6B7A 100%);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+}
 
-  .valorant-btn-secondary {
-    @apply px-6 py-2 border-2 border-valorant-accent text-valorant-accent font-semibold rounded-lg 
-      transition-valorant hover:bg-valorant-accent hover:text-white;
-  }
+.valorant-btn:hover {
+  box-shadow: 0 0 20px rgba(255, 70, 85, 0.3);
+  transform: scale(1.05);
+}
 
-  .valorant-card {
-    @apply bg-valorant-secondary border border-valorant-accent border-opacity-20 rounded-lg 
-      p-4 transition-valorant hover:shadow-valorant hover:border-opacity-100;
-  }
+.valorant-btn:active {
+  transform: scale(0.95);
+}
 
-  .valorant-input {
-    @apply w-full px-4 py-2 bg-valorant-secondary border border-valorant_light border-opacity-20 
-      rounded-lg text-valorant_light placeholder-valorant_light placeholder-opacity-40 
-      focus:outline-none focus:border-valorant-accent focus:shadow-valorant transition-valorant;
-  }
+.valorant-btn-secondary {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid #FF4655;
+  color: #FF4655;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+  cursor: pointer;
+}
+
+.valorant-btn-secondary:hover {
+  background-color: #FF4655;
+  color: white;
+}
+
+.valorant-card {
+  background-color: #1A1F2E;
+  border: 1px solid rgba(255, 70, 85, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.valorant-card:hover {
+  box-shadow: 0 0 20px rgba(255, 70, 85, 0.3);
+  border-color: #FF4655;
+}
+
+.valorant-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: #1A1F2E;
+  border: 1px solid rgba(201, 201, 201, 0.2);
+  border-radius: 0.5rem;
+  color: #C9C9C9;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.valorant-input::placeholder {
+  color: rgba(201, 201, 201, 0.4);
+}
+
+.valorant-input:focus {
+  outline: none;
+  border-color: #FF4655;
+  box-shadow: 0 0 20px rgba(255, 70, 85, 0.3);
 }
 
 /* Animations */
