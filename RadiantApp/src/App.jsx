@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Footer from './components/Footer';
 import HomePage from './components/HomePage';
 import WeaponDetailPage from './pages/WeaponDetailPage';
 import QuizPage from './pages/QuizPage';
@@ -30,7 +29,6 @@ function App() {
             <Route path="/agents" element={<HomePage />} />
           </Routes>
         </div>
-        <Footer />
       </div>
     </Router>
   );

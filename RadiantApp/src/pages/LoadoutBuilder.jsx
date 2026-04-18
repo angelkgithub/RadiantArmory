@@ -112,26 +112,19 @@ function LoadoutBuilder() {
     <div className="min-h-screen bg-[#111823] overflow-auto"
       style={{ background: 'linear-gradient(135deg, #0a0e27 0%, #111823 100%)' }}>
 
-      {/* HEADER */}
-      <div className="sticky top-0 z-50 bg-black/60 backdrop-blur border-b border-[#ff4654]/30 px-6 py-3 flex justify-between items-center">
-        <div className="text-3xl font-black text-[#ff4654] tracking-wider">
-          TOTAL COST: {totalCost.toLocaleString()} VP
-        </div>
-      </div>
-
       {/* MAIN */}
-      <div className="flex min-h-[calc(100vh-80px)] gap-6 p-6">
+      <div className="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] gap-4 sm:gap-6 p-3 sm:p-6">
 
         {/* LEFT WEAPONS */}
-        <div className="flex-1 overflow-auto flex gap-8">
+        <div className="flex-1 overflow-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
 
           {columnLayout.map(({ column, categories }) => (
-            <div key={column} className="w-48 flex-shrink-0 space-y-8">
+            <div key={column} className="space-y-6 sm:space-y-8">
 
               {categories.map(({ categoryKey, name }) => (
                 <div key={categoryKey}>
 
-                  <h2 className="text-lg font-black text-white mb-4 uppercase">
+                  <h2 className="text-sm sm:text-lg font-black text-white mb-3 sm:mb-4 uppercase">
                     {name}
                   </h2>
 
@@ -185,10 +178,10 @@ function LoadoutBuilder() {
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="flex-shrink-0 flex flex-col gap-6" style={{ width: '268px' }}>
+        <div className="flex-shrink-0 flex flex-col gap-4 sm:gap-6 w-full lg:w-[268px]">
 
           {/* PLAYER CARD */}
-          <div className="relative overflow-hidden"
+          <div className="relative overflow-hidden hidden lg:block"
             style={{
               clipPath: 'polygon(0 0, 100% 0, 98% 95%, 0 100%)',
               width: '268px',
@@ -252,12 +245,12 @@ function LoadoutBuilder() {
 
       {/* PLAYER CARD MODAL (ADDED) */}
       {isPlayerCardOpen && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-          <div className="bg-gray-900 p-4 w-[800px] max-h-[80vh] overflow-auto border border-[#ff4654]">
+          <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+          <div className="bg-gray-900 p-4 w-full max-w-[800px] max-h-[80vh] overflow-auto border border-[#ff4654] rounded-lg">
 
-            <h2 className="text-white font-bold mb-4">Select Player Card</h2>
+            <h2 className="text-white font-bold mb-4 text-sm sm:text-base">Select Player Card</h2>
 
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-3">
               {playerCards.map((card) => (
                 <div
                   key={card.uuid}

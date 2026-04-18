@@ -1,172 +1,205 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useGetAllAgentsQuery } from '../services/valorantApi';
+
+const features = [
+  {
+    title: 'AGENT QUIZ',
+    description: 'Find your perfect agent match through a personalized quiz',
+    link: '/quiz',
+    image: 'https://res.cloudinary.com/dc3erz7jd/image/upload/v1776518659/1868865-2560x1440-desktop-hd-valorant-background_kpemf4.jpg',
+    accent: '#ff4654',
+  },
+  {
+    title: 'LOADOUT',
+    description: 'Build and customize your weapon loadout with skins',
+    link: '/loadout',
+    image: 'https://res.cloudinary.com/dc3erz7jd/image/upload/v1776517270/1868807-3840x2160-desktop-4k-valorant-background-photo_fhmdy6.jpg',
+    accent: '#5a9fd4',
+  },
+  {
+    title: 'STRATEGY',
+    description: 'Generate tactical agent compositions for any map',
+    link: '/strategy',
+    image: 'https://res.cloudinary.com/dc3erz7jd/image/upload/v1776518658/1868872-2560x1440-desktop-hd-valorant-wallpaper_hqytqi.jpg',
+    accent: '#b052d9',
+  },
+  {
+    title: 'MAP PLANNER',
+    description: 'Draw strategies and plan agent positions on maps',
+    link: '/planner',
+    image: 'https://res.cloudinary.com/dc3erz7jd/image/upload/v1776518658/1868815-3840x2160-desktop-4k-valorant-wallpaper_psr8mp.jpg',
+    accent: '#f5a623',
+  },
+  {
+    title: 'COLLECTION',
+    description: 'Browse the full skin library and agent roster',
+    link: '/collection',
+    image: 'https://res.cloudinary.com/dc3erz7jd/image/upload/v1776518658/1869238-3840x2160-desktop-4k-valorant-background-image_wx0cgg.jpg',
+    accent: '#2dd4a8',
+  },
+];
 
 export default function HomePage() {
-  const { data: agents = [] } = useGetAllAgentsQuery();
-
-  const features = [
-    {
-      title: 'BEST AGENT QUIZ',
-      description: 'Take a personalized quiz to find your perfect agent',
-      icon: '🧠',
-      link: '/quiz',
-      color: 'from-[#ff4654] to-[#ba3a46]',
-    },
-    {
-      title: 'LOADOUT BUILDER',
-      description: 'Create and customize your perfect weapon loadout',
-      icon: '🎨',
-      link: '/loadout',
-      color: 'from-[#ff4654] to-[#ba3a46]',
-    },
-    {
-      title: 'STRATEGY GENERATOR',
-      description: 'Generate tactical strategies for any map',
-      icon: '🧠',
-      link: '/strategy',
-      color: 'from-[#ff4654] to-[#ba3a46]',
-    },
-    {
-      title: 'INTERACTIVE MAP PLANNER',
-      description: 'Draw and plan strategies on in-game maps',
-      icon: '🎯',
-      link: '/planner',
-      color: 'from-[#ff4654] to-[#ba3a46]',
-    },
-    {
-      title: 'SKIN COLLECTION TRACKER',
-      description: 'Track and rate your skin collection',
-      icon: '💎',
-      link: '/collection',
-      color: 'from-[#ff4654] to-[#ba3a46]',
-    },
-  ];
+  const [activeIndex, setActiveIndex] = useState(null);
 
   return (
-    <main className="min-h-screen bg-[#111823]">
-      {/* Hero Section */}
-      <section className="relative py-16 sm:py-24 px-2 sm:px-4 overflow-hidden flex justify-center items-center">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#ff4654] opacity-5 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-10 left-0 w-96 h-96 bg-[#ff4654] opacity-5 rounded-full blur-3xl"></div>
+    <main className="min-h-screen bg-[#111823] overflow-hidden">
 
-        <div className="w-full max-w-7xl relative z-10">
+      {/* =========== HERO — Expanding Hover Cards =========== */}
+      <section className="relative px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+        {/* Background decorations */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle, #ff4654 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-[#ff4654]/5 rounded-full blur-[180px]" />
+
+        <div className="relative z-10 max-w-7xl mx-auto">
+          {/* Header text */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black mb-4 text-white leading-tight">
-              RADIANT
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ff4654]/10 border border-[#ff4654]/20 mb-5">
+              <div className="w-2 h-2 rounded-full bg-[#ff4654] animate-pulse" />
+              <span className="text-[#ff4654] text-sm font-medium tracking-wider uppercase">Valorant Companion</span>
+            </div>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-3">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-400">RADIANT</span>
               <br />
-              <span className="text-[#ff4654]">ARMORY</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4654] to-[#ff8a93]">ARMORY</span>
             </h1>
-            <p className="text-base sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto px-2">
-              Your ultimate Valorant companion. Build your playstyle, master strategies, and dominate the competition.
+            <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">
+              Build your playstyle, master strategies, and dominate the competition
             </p>
-
-            <Link
-              to="/quiz"
-              className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-[#ff4654] text-white font-bold text-sm sm:text-lg hover:bg-[#ba3a46] transition-all rounded hover:scale-105 transform"
-            >
-              START YOUR JOURNEY →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="w-full px-2 sm:px-4 py-20 flex justify-center items-center">
-        <div className="w-full max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">CORE FEATURES</h2>
-            <div className="h-1 w-20 bg-[#ff4654] mx-auto"></div>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6">
-            {features.map((feature, index) => (
-              <Link
-                key={index}
-                to={feature.link}
-                className="group relative overflow-hidden rounded-lg w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-xs"
-              >
-                <div className={`bg-gradient-to-br ${feature.color} opacity-50 p-6 sm:p-8 h-full border-2 border-[#ff4654] hover:opacity-70 transition-all duration-300 rounded-lg`}>
-                  <div className="text-5xl mb-4">{feature.icon}</div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">{feature.title}</h3>
-                  <p className="text-sm sm:text-base text-gray-300 mb-4">{feature.description}</p>
-                  <div className="flex items-center text-[#ff4654] font-bold group-hover:translate-x-2 transition-transform">
-                    Explore →
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Agents */}
-      <section className="w-full px-2 sm:px-4 py-20 flex justify-center items-center">
-        <div className="w-full max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">FEATURED AGENTS</h2>
-            <div className="h-1 w-20 bg-[#ff4654] mx-auto"></div>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
-            {agents.slice(0, 5).map(agent => (
-              <div
-                key={agent.uuid}
-                className="group bg-gradient-to-br from-[#ff4654]/20 to-[#ba3a46]/20 border-2 border-[#ff4654] p-4 sm:p-6 rounded-lg hover:opacity-80 transition-all duration-300 text-center cursor-pointer w-full sm:w-[calc(50%-8px)] lg:w-[calc(20%-12px)] max-w-xs"
-              >
-                {agent.displayIcon && (
-                  <img
-                    src={agent.displayIcon}
-                    alt={agent.displayName}
-                    className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 object-contain group-hover:scale-110 transition-transform"
-                  />
-                )}
-                <h3 className="text-white font-bold text-base sm:text-lg mb-1">{agent.displayName}</h3>
-                <p className="text-gray-400 text-xs sm:text-sm">{agent.role?.displayName}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Stats */}
-      <section className="bg-gradient-to-r from-[#ff4654]/20 to-[#ba3a46]/20 border-t border-[#ff4654] border-opacity-30 py-16 w-full">
-        <div className="w-full max-w-7xl mx-auto px-2 sm:px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center">
-            <div>
-              <p className="text-2xl sm:text-4xl font-bold text-[#ff4654] mb-2">5+</p>
-              <p className="text-xs sm:text-base text-gray-300">Core Features</p>
-            </div>
-            <div>
-              <p className="text-2xl sm:text-4xl font-bold text-[#ff4654] mb-2">18+</p>
-              <p className="text-xs sm:text-base text-gray-300">Playable Agents</p>
-            </div>
-            <div>
-              <p className="text-2xl sm:text-4xl font-bold text-[#ff4654] mb-2">10+</p>
-              <p className="text-xs sm:text-base text-gray-300">Maps</p>
-            </div>
-            <div>
-              <p className="text-2xl sm:text-4xl font-bold text-[#ff4654] mb-2">∞</p>
-              <p className="text-xs sm:text-base text-gray-300">Possibilities</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="w-full px-2 sm:px-4 py-16 sm:py-20 flex justify-center items-center">
-        <div className="w-full max-w-7xl text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">READY TO DOMINATE?</h2>
-          <p className="text-base sm:text-xl text-gray-300 mb-8 px-2">
-            Start your journey with Radiant Armory today
-          </p>
-          <Link
-            to="/quiz"
-            className="inline-block px-8 sm:px-10 py-3 sm:py-4 bg-[#ff4654] text-white font-bold text-sm sm:text-lg hover:bg-[#ba3a46] transition-all rounded hover:scale-105 transform"
+          {/* ===== Expanding Cards ===== */}
+          <div
+            className="flex h-[420px] sm:h-[480px] md:h-[520px] rounded-2xl overflow-hidden border border-white/5 shadow-2xl shadow-black/50"
+            onMouseLeave={() => setActiveIndex(null)}
           >
-            TAKE THE QUIZ NOW
-          </Link>
+            {features.map((card, i) => {
+              const isActive = activeIndex === i;
+              const hasActive = activeIndex !== null;
+              return (
+                <Link
+                  key={i}
+                  to={card.link}
+                  className="relative block overflow-hidden border-r border-white/5 last:border-r-0"
+                  style={{
+                    flex: isActive ? 4 : (hasActive ? 1 : 1),
+                    transition: 'flex 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
+                  }}
+                  onMouseEnter={() => setActiveIndex(i)}
+                >
+                  {/* Background image */}
+                  <img
+                    src={card.image}
+                    alt={card.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
+                    style={{
+                      filter: isActive ? 'brightness(0.7)' : 'brightness(0.25)',
+                      transform: isActive ? 'scale(1.05)' : 'scale(1)',
+                    }}
+                  />
+
+                  {/* Top accent bar */}
+                  <div
+                    className="absolute top-0 left-0 right-0 h-[3px] transition-opacity duration-500"
+                    style={{
+                      background: card.accent,
+                      opacity: isActive ? 1 : 0.3,
+                    }}
+                  />
+
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+
+                  {/* Vertical label (visible when collapsed) */}
+                  <div
+                    className="absolute inset-0 flex items-center justify-center transition-opacity duration-400"
+                    style={{ opacity: isActive ? 0 : 1 }}
+                  >
+                    <span
+                      className="text-white/70 font-black text-xs tracking-[0.3em] uppercase whitespace-nowrap"
+                      style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+                    >
+                      {card.title}
+                    </span>
+                  </div>
+
+                  {/* Content overlay (visible when active) */}
+                  <div
+                    className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 transition-opacity duration-500"
+                    style={{ opacity: isActive ? 1 : 0 }}
+                  >
+                    <div className="whitespace-nowrap">
+                      <div
+                        className="inline-block text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full mb-3"
+                        style={{ color: card.accent, backgroundColor: `${card.accent}20`, border: `1px solid ${card.accent}40` }}
+                      >
+                        Explore Feature
+                      </div>
+                      <h2 className="text-3xl sm:text-4xl font-black text-white tracking-wide mb-2">{card.title}</h2>
+                      <p className="text-gray-400 text-sm">{card.description}</p>
+                      <div className="flex items-center gap-2 mt-4 text-sm font-bold" style={{ color: card.accent }}>
+                        <span>Enter</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Number badge */}
+                  <div
+                    className="absolute top-4 left-4 w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black transition-all duration-500"
+                    style={{
+                      backgroundColor: isActive ? `${card.accent}25` : 'rgba(255,255,255,0.05)',
+                      color: isActive ? card.accent : 'rgba(255,255,255,0.3)',
+                      border: `1px solid ${isActive ? `${card.accent}40` : 'rgba(255,255,255,0.05)'}`,
+                    }}
+                  >
+                    0{i + 1}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </section>
+
+      {/* =========== Footer =========== */}
+      <footer className="relative px-4 sm:px-6 lg:px-8 py-12 border-t border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-center md:text-left">
+              <h3 className="text-xl font-black tracking-wider mb-1">
+                <span className="text-white">RADIANT</span>{' '}
+                <span className="text-[#ff4654]">ARMORY</span>
+              </h3>
+              <p className="text-gray-600 text-xs tracking-wider">Your Ultimate Valorant Companion</p>
+            </div>
+
+            <div className="flex items-center gap-6">
+              {features.map((f, i) => (
+                <Link
+                  key={i}
+                  to={f.link}
+                  className="text-gray-500 text-xs font-medium tracking-wider hover:text-white transition-colors"
+                >
+                  {f.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-gray-600 text-[11px] tracking-wider">
+              © 2026 Radiant Armory. Built with React & Valorant API.
+            </p>
+            <p className="text-gray-700 text-[11px] tracking-wider">
+              Not affiliated with Riot Games
+            </p>
+          </div>
+        </div>
+      </footer>
+
     </main>
   );
 }
