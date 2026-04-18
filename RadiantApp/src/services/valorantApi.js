@@ -7,6 +7,7 @@ export const valorantApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_BASE_URL,
   }),
+
   endpoints: (builder) => ({
     // Agents
     getAllAgents: builder.query({
@@ -40,7 +41,7 @@ export const valorantApi = createApi({
 
     // Cosmetics/Skins
     getWeaponSkins: builder.query({
-      query: (weaponUuid) => `/weapons/skinlevels`,
+      query: () => `/weapons/skins`,
       transformResponse: (response) => {
         return (response.data || []).filter(skin => skin.displayName);
       },
@@ -57,6 +58,12 @@ export const valorantApi = createApi({
       query: () => '/sprays',
       transformResponse: (response) => response.data || [],
     }),
+
+    // Player Cards
+    getPlayerCards: builder.query({
+      query: () => '/playercards',
+      transformResponse: (response) => response.data || [],
+    }),
   }),
 });
 
@@ -70,4 +77,5 @@ export const {
   useGetWeaponSkinsQuery,
   useGetBundlesQuery,
   useGetSpraysQuery,
+  useGetPlayerCardsQuery,
 } = valorantApi;

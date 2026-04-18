@@ -5,6 +5,7 @@ import HomePage from './components/HomePage';
 import WeaponDetailPage from './pages/WeaponDetailPage';
 import QuizPage from './pages/QuizPage';
 import LoadoutPage from './pages/LoadoutPage';
+import LoadoutBuilder from './pages/LoadoutBuilder';
 import StrategyPage from './pages/StrategyPage';
 import MapPlannerPage from './pages/MapPlannerPage';
 import CollectionPage from './pages/CollectionPage';
@@ -19,7 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/quiz" element={<QuizPage />} />
-            <Route path="/loadout" element={<LoadoutPage />} />
+            <Route path="/loadout" element={<LoadoutBuilder />} />
             <Route path="/strategy" element={<StrategyPage />} />
             <Route path="/planner" element={<MapPlannerPage />} />
             <Route path="/collection" element={<CollectionPage />} />
