@@ -5,45 +5,57 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
-    <header className="bg-valorant-primary border-b border-valorant-accent border-opacity-20 sticky top-0 z-50">
+    <header className="bg-[#111823] border-b border-[#ff4654] border-opacity-30 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="text-2xl font-bold bg-gradient-accent bg-clip-text text-transparent">
+            <div className="text-2xl font-bold text-[#ff4654]">
               RADIANT
             </div>
-            <span className="text-valorant-accent text-sm">Armory</span>
+            <span className="text-gray-400 text-sm">ARMORY</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             <Link 
-              to="/" 
-              className="text-valorant_light hover:text-valorant-accent transition-colors"
+              to="/quiz" 
+              className="text-white hover:text-[#ff4654] transition-colors font-bold text-sm"
             >
-              Weapons
+              QUIZ
             </Link>
             <Link 
-              to="/" 
-              className="text-valorant_light hover:text-valorant-accent transition-colors"
+              to="/loadout" 
+              className="text-white hover:text-[#ff4654] transition-colors font-bold text-sm"
             >
-              Skins
+              LOADOUT
             </Link>
             <Link 
-              to="/" 
-              className="text-valorant_light hover:text-valorant-accent transition-colors"
+              to="/strategy" 
+              className="text-white hover:text-[#ff4654] transition-colors font-bold text-sm"
             >
-              Agents
+              STRATEGY
             </Link>
-            <button className="valorant-btn">
-              Shop
+            <Link 
+              to="/planner" 
+              className="text-white hover:text-[#ff4654] transition-colors font-bold text-sm"
+            >
+              PLANNER
+            </Link>
+            <Link 
+              to="/collection" 
+              className="text-white hover:text-[#ff4654] transition-colors font-bold text-sm"
+            >
+              COLLECTION
+            </Link>
+            <button className="px-4 py-2 bg-[#ff4654] text-white font-bold rounded hover:bg-[#ba3a46] transition-all">
+              🔍
             </button>
           </nav>
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden text-valorant_light hover:text-valorant-accent transition-colors"
+            className="md:hidden text-white hover:text-[#ff4654] transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,28 +66,42 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden pb-4 border-t border-valorant-accent border-opacity-20 mt-4">
+          <div className="md:hidden pb-4 border-t border-[#ff4654] border-opacity-30 mt-4">
             <Link 
-              to="/" 
-              className="block py-2 text-valorant_light hover:text-valorant-accent transition-colors"
+              to="/quiz" 
+              className="block py-2 text-white hover:text-[#ff4654] transition-colors font-bold"
+              onClick={() => setIsMenuOpen(false)}
             >
-              Weapons
+              QUIZ
             </Link>
             <Link 
-              to="/" 
-              className="block py-2 text-valorant_light hover:text-valorant-accent transition-colors"
+              to="/loadout" 
+              className="block py-2 text-white hover:text-[#ff4654] transition-colors font-bold"
+              onClick={() => setIsMenuOpen(false)}
             >
-              Skins
+              LOADOUT
             </Link>
             <Link 
-              to="/" 
-              className="block py-2 text-valorant_light hover:text-valorant-accent transition-colors"
+              to="/strategy" 
+              className="block py-2 text-white hover:text-[#ff4654] transition-colors font-bold"
+              onClick={() => setIsMenuOpen(false)}
             >
-              Agents
+              STRATEGY
             </Link>
-            <button className="valorant-btn w-full mt-4">
-              Shop
-            </button>
+            <Link 
+              to="/planner" 
+              className="block py-2 text-white hover:text-[#ff4654] transition-colors font-bold"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              PLANNER
+            </Link>
+            <Link 
+              to="/collection" 
+              className="block py-2 text-white hover:text-[#ff4654] transition-colors font-bold"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              COLLECTION
+            </Link>
           </div>
         )}
       </div>

@@ -6,7 +6,8 @@ export const store = configureStore({
     [valorantApi.reducerPath]: valorantApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(valorantApi.middleware),
+    getDefaultMiddleware()
+      .concat(valorantApi.middleware),
 });
 
 export default store;
