@@ -46,33 +46,36 @@ export default function HomePage() {
     <main className="min-h-screen bg-[#111823] overflow-hidden">
 
       {/* =========== HERO — Expanding Hover Cards =========== */}
-      <section className="relative px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+      <section className="relative w-full px-4 sm:px-6 lg:px-8 pt-20 pb-16">
         {/* Background decorations */}
         <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle, #ff4654 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-[#ff4654]/5 rounded-full blur-[180px]" />
 
-        <div className="relative z-10 max-w-7xl mx-auto">
-          {/* Header text */}
-          <div className="text-center mb-12">
+        {/* Header text */}
+        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 text-center mb-12">
+          <div className="flex justify-center">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ff4654]/10 border border-[#ff4654]/20 mb-5">
               <div className="w-2 h-2 rounded-full bg-[#ff4654] animate-pulse" />
               <span className="text-[#ff4654] text-sm font-medium tracking-wider uppercase">Valorant Companion</span>
             </div>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-3">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-400">RADIANT</span>
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4654] to-[#ff8a93]">ARMORY</span>
-            </h1>
-            <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">
+          </div>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-3 leading-tight">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-400">RADIANT</span>
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4654] to-[#ff8a93]">ARMORY</span>
+          </h1>
+          <div className="flex justify-center">
+            <p className="text-gray-500 text-sm sm:text-base max-w-2xl">
               Build your playstyle, master strategies, and dominate the competition
             </p>
           </div>
+        </div>
 
-          {/* ===== Expanding Cards ===== */}
-          <div
-            className="flex h-[420px] sm:h-[480px] md:h-[520px] rounded-2xl overflow-hidden border border-white/5 shadow-2xl shadow-black/50"
-            onMouseLeave={() => setActiveIndex(null)}
-          >
+        {/* ===== Expanding Cards - Full Width ===== */}
+        <div
+          className="relative z-10 flex h-[420px] sm:h-[480px] md:h-[520px] rounded-2xl overflow-hidden border border-white/5 shadow-2xl shadow-black/50 gap-0.5 mt-12"
+          onMouseLeave={() => setActiveIndex(null)}
+        >
             {features.map((card, i) => {
               const isActive = activeIndex === i;
               const hasActive = activeIndex !== null;
@@ -80,9 +83,9 @@ export default function HomePage() {
                 <Link
                   key={i}
                   to={card.link}
-                  className="relative block overflow-hidden border-r border-white/5 last:border-r-0"
+                  className="relative block overflow-hidden border-r border-white/5 last:border-r-0 flex-1 min-w-0"
                   style={{
-                    flex: isActive ? 4 : (hasActive ? 1 : 1),
+                    flex: isActive ? '3 1 auto' : (hasActive ? '0.6 0 auto' : '1 1 auto'),
                     transition: 'flex 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
                   }}
                   onMouseEnter={() => setActiveIndex(i)}
@@ -160,7 +163,6 @@ export default function HomePage() {
                 </Link>
               );
             })}
-          </div>
         </div>
       </section>
 
