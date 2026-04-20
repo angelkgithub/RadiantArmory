@@ -43,10 +43,19 @@ export default function HomePage() {
   const [activeIndex, setActiveIndex] = useState(null);
 
   return (
-    <main className="min-h-screen bg-[#111823] overflow-hidden">
+    <main className="min-h-screen bg-[#111823] overflow-hidden relative">
+      {/* Full-page background image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://res.cloudinary.com/dc3erz7jd/image/upload/v1776653140/val_bg_zcph38.jpg"
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#111823]/80" />
+      </div>
 
       {/* =========== HERO — Expanding Hover Cards =========== */}
-      <section className="relative w-full px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+      <section className="relative z-10 w-full px-4 sm:px-6 lg:px-8 pt-20 pb-16">
         {/* Background decorations */}
         <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle, #ff4654 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-[#ff4654]/5 rounded-full blur-[180px]" />
@@ -166,41 +175,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* =========== Footer =========== */}
-      <footer className="relative px-4 sm:px-6 lg:px-8 py-12 border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-center md:text-left">
-              <h3 className="text-xl font-black tracking-wider mb-1">
-                <span className="text-white">RADIANT</span>{' '}
-                <span className="text-[#ff4654]">ARMORY</span>
-              </h3>
-              <p className="text-gray-600 text-xs tracking-wider">Your Ultimate Valorant Companion</p>
-            </div>
 
-            <div className="flex items-center gap-6">
-              {features.map((f, i) => (
-                <Link
-                  key={i}
-                  to={f.link}
-                  className="text-gray-500 text-xs font-medium tracking-wider hover:text-white transition-colors"
-                >
-                  {f.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-gray-600 text-[11px] tracking-wider">
-              © 2026 Radiant Armory. Built with React & Valorant API.
-            </p>
-            <p className="text-gray-700 text-[11px] tracking-wider">
-              Not affiliated with Riot Games
-            </p>
-          </div>
-        </div>
-      </footer>
 
     </main>
   );

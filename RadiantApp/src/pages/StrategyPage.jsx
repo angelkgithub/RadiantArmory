@@ -104,17 +104,13 @@ function StrategyPage() {
   // ─── STRATEGY RESULT ────────────────────────────────
   if (strategy) {
     return (
-      <div className="min-h-screen bg-[#111823] relative overflow-hidden">
-        {/* Background map image */}
-        {strategy.mapSplash && (
-          <div className="absolute inset-0">
-            <img src={strategy.mapSplash} alt="" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-[#111823]/85 backdrop-blur-sm"></div>
-          </div>
-        )}
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Background image */}
+        <img src={strategy.mapSplash || 'https://res.cloudinary.com/dc3erz7jd/image/upload/v1776654326/clove_fznmrp.jpg'} alt="" className="fixed inset-0 w-full h-full object-cover" style={{ zIndex: 0 }} />
+        <div className="fixed inset-0 bg-[#111823]/80 backdrop-blur-sm" style={{ zIndex: 0 }} />
 
         <div className="relative z-10 min-h-screen px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
-          <div className="max-w-7xl mx-auto">
+          <div className="w-full">
             {/* Header */}
             <div className="text-center mb-8">
               <p className="text-[#ff4654] text-xs font-bold tracking-[0.3em] uppercase mb-3">Strategy Briefing</p>
@@ -245,9 +241,10 @@ function StrategyPage() {
 
   // ─── SETUP FLOW ─────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#111823] relative">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.015]" style={{backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px'}}></div>
+    <div className="min-h-screen relative">
+      {/* Background image */}
+      <img src="https://res.cloudinary.com/dc3erz7jd/image/upload/v1776654326/clove_fznmrp.jpg" alt="" className="fixed inset-0 w-full h-full object-cover" style={{ zIndex: 0 }} />
+      <div className="fixed inset-0 bg-[#111823]/80" style={{ zIndex: 0 }} />
 
       <div className="relative z-10 min-h-screen flex flex-col px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
         {/* Header */}
@@ -266,7 +263,7 @@ function StrategyPage() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto w-full flex-1">
+        <div className="w-full flex-1">
           {/* Step 1: Map Selection */}
           {step === 1 && (
             <div className="animate-[fadeIn_0.3s_ease-out]">
@@ -282,7 +279,7 @@ function StrategyPage() {
                 )}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {playableMaps.map(map => (
                   <button
                     key={map.uuid}
@@ -293,7 +290,7 @@ function StrategyPage() {
                         : 'border-white/5 hover:border-white/15'
                     }`}
                   >
-                    <div className="aspect-[16/9] relative">
+                    <div className="aspect-[16/10] relative">
                       {map.splash ? (
                         <img src={map.splash} alt={map.displayName} className="w-full h-full object-cover" />
                       ) : (

@@ -67,13 +67,6 @@ function LoadoutPage() {
     setIsPlaying(!isPlaying);
   };
 
-  const bgStyle = {
-    backgroundImage: `url('https://res.cloudinary.com/dc3erz7jd/image/upload/v1776517270/1868807-3840x2160-desktop-4k-valorant-background-photo_fhmdy6.jpg')`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundAttachment: 'fixed',
-  };
-
   if (weaponsLoading) {
     return (
       <div className="min-h-screen bg-[#111823] flex items-center justify-center">
@@ -83,9 +76,16 @@ function LoadoutPage() {
   }
 
   return (
-    <div className="min-h-screen relative" style={bgStyle}>
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-[#111823]/80 to-[#111823]/95" />
+    <div className="min-h-screen relative bg-[#111823]">
+      {/* Background image */}
+      <div className="fixed inset-0 z-0">
+        <img
+          src="https://res.cloudinary.com/dc3erz7jd/image/upload/v1776517268/1868991-3000x1688-desktop-hd-valorant-background_j8bxeb.jpg"
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#111823]/75" />
+      </div>
 
       <div className="relative z-10 px-2 py-20">
         <div className="w-full">

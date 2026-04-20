@@ -20,7 +20,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8 flex-1 justify-end">
+          <nav className="hidden md:flex items-center gap-8 flex-1 justify-end mr-8">
             <Link 
               to="/quiz" 
               className="relative group text-white hover:text-[#ff4654] transition-colors font-bold text-xs tracking-wider uppercase"
@@ -56,9 +56,6 @@ export default function Header() {
               COLLECTION
               <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#ff4654] to-transparent group-hover:w-full transition-all duration-300" />
             </Link>
-            <button className="px-4 py-2 bg-[#ff4654] text-white font-bold rounded hover:bg-[#ba3a46] transition-all text-sm tracking-wider ml-2">
-              🔍
-            </button>
           </nav>
 
           {/* Mobile Menu Button */}

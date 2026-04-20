@@ -188,9 +188,10 @@ function MapPlannerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#111823] relative">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-[0.015]" style={{backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px'}}></div>
+    <div className="min-h-screen relative">
+      {/* Background image */}
+      <img src="https://res.cloudinary.com/dc3erz7jd/image/upload/v1776518659/1868859-3840x2160-desktop-4k-valorant-background-image_qkrnf1.jpg" alt="" className="fixed inset-0 w-full h-full object-cover" style={{ zIndex: 0 }} />
+      <div className="fixed inset-0 bg-[#111823]/80" style={{ zIndex: 0 }} />
 
       <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         {/* Header */}
@@ -206,21 +207,21 @@ function MapPlannerPage() {
 
         {/* Map Selection */}
         {!selectedMap && (
-          <div className="max-w-7xl mx-auto">
+          <div className="w-full">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-white font-black text-xl sm:text-2xl tracking-wider">SELECT MAP</h2>
                 <p className="text-gray-500 text-xs mt-1">Choose a map to start planning</p>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {playableMaps.map(map => (
                 <button
                   key={map.uuid}
                   onClick={() => setSelectedMap(map)}
                   className="group relative overflow-hidden rounded-xl border border-white/5 hover:border-white/15 transition-all duration-300 hover:scale-[1.03]"
                 >
-                  <div className="aspect-[16/9] relative">
+                  <div className="aspect-[16/10] relative">
                     {map.splash ? (
                       <img src={map.splash} alt={map.displayName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     ) : (

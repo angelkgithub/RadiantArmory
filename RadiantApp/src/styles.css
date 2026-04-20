@@ -105,6 +105,8 @@ body {
   background: #0b1219;
   border-top: 1px solid var(--v-grey);
   margin-top: auto;
+  position: relative;
+  z-index: 10;
 }
 
 .v-footer-content {

@@ -128,16 +128,13 @@ function CollectionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#111823] relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: 'radial-gradient(circle, #ff4654 1px, transparent 1px)',
-        backgroundSize: '30px 30px',
-      }} />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#ff4654]/5 rounded-full blur-[150px]" />
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background image */}
+      <img src="https://res.cloudinary.com/dc3erz7jd/image/upload/v1776654727/fade_ku3xfn.jpg" alt="" className="fixed inset-0 w-full h-full object-cover" style={{ zIndex: 0 }} />
+      <div className="fixed inset-0 bg-[#111823]/80" style={{ zIndex: 0 }} />
 
       <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-20">
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full">
 
           {/* Header */}
           <div className="text-center mb-8">
