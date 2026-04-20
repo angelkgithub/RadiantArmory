@@ -112,9 +112,24 @@ function LoadoutBuilder() {
                           </div>
                           <button
                             onClick={() => { setSelectedWeaponForModal(weapon); setIsModalOpen(true); }}
-                            className="mt-1 w-full px-2 py-1 text-xs font-bold text-white bg-gradient-to-r from-[#ff4654] to-[#ba3a46] border border-[#ff4654] rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:shadow-lg hover:shadow-[#ff4654]/50 uppercase tracking-wider"
+                            className="mt-1 w-full px-2 py-1 text-xs font-bold text-[#ff4654] h-8 border-2 border-[#ff4654] rounded relative overflow-hidden transition-all duration-500 ease-in hover:scale-[1.02] active:scale-[0.98] group uppercase tracking-wider opacity-0 group-hover:opacity-100"
+                            style={{
+                              background: 'transparent',
+                              cursor: 'pointer',
+                            }}
                           >
-                            Skins
+                            {/* Skew gradient backgrounds */}
+                            <div 
+                              className="absolute top-0 -left-1.5 w-0 h-full bg-[#ff4654] transition-all duration-500 group-hover:w-1/2 skew-x-12 z-0"
+                            />
+                            <div 
+                              className="absolute top-0 -right-1.5 w-0 h-full bg-[#ff6b6b] transition-all duration-500 group-hover:w-1/2 -skew-x-12 z-0"
+                            />
+                            
+                            {/* Text */}
+                            <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                              Skins
+                            </span>
                           </button>
                         </div>
                       );
@@ -147,9 +162,24 @@ function LoadoutBuilder() {
 
           <button
             onClick={() => setIsPlayerCardOpen(true)}
-            className="w-full py-2.5 bg-gradient-to-r from-[#ff4654] to-[#ba3a46] text-white font-bold rounded-lg uppercase tracking-wider text-sm hover:shadow-lg hover:shadow-[#ff4654]/30 transition-all duration-300"
+            className="w-full h-12 rounded-lg border-2 border-[#ff4654] relative overflow-hidden transition-all duration-500 ease-in hover:scale-[1.02] active:scale-[0.98] group"
+            style={{
+              background: 'transparent',
+              cursor: 'pointer',
+            }}
           >
-            Change Player Card
+            {/* Skew gradient backgrounds */}
+            <div 
+              className="absolute top-0 -left-2.5 w-0 h-full bg-[#ff4654] transition-all duration-500 group-hover:w-1/2 skew-x-12 z-0"
+            />
+            <div 
+              className="absolute top-0 -right-2.5 w-0 h-full bg-[#ff6b6b] transition-all duration-500 group-hover:w-1/2 -skew-x-12 z-0"
+            />
+            
+            {/* Text */}
+            <span className="relative z-10 flex items-center justify-center h-full text-[#ff4654] group-hover:text-white transition-colors duration-300 font-bold text-sm uppercase tracking-wider">
+              Change Player Card
+            </span>
           </button>
 
           {/* Skin Preview */}
@@ -187,9 +217,24 @@ function LoadoutBuilder() {
             </div>
             <button
               onClick={() => setIsPlayerCardOpen(false)}
-              className="mt-4 w-full py-2.5 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-colors uppercase tracking-wider text-sm"
+              className="mt-4 w-full h-10 border-2 border-[#ff4654] text-[#ff4654] font-bold rounded-lg relative overflow-hidden transition-all duration-500 ease-in hover:scale-[1.02] active:scale-[0.98] group uppercase tracking-wider text-sm"
+              style={{
+                background: 'transparent',
+                cursor: 'pointer',
+              }}
             >
-              Close
+              {/* Skew gradient backgrounds */}
+              <div 
+                className="absolute top-0 -left-2.5 w-0 h-full bg-[#ff4654] transition-all duration-500 group-hover:w-1/2 skew-x-12 z-0"
+              />
+              <div 
+                className="absolute top-0 -right-2.5 w-0 h-full bg-[#ff6b6b] transition-all duration-500 group-hover:w-1/2 -skew-x-12 z-0"
+              />
+              
+              {/* Text */}
+              <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                Close
+              </span>
             </button>
           </div>
         </div>

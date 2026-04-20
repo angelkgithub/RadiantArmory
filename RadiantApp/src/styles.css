@@ -178,10 +178,11 @@ body {
 
 .v-api-inner {
   border: 1px solid var(--v-grey);
-  padding: 20px 40px;
+  padding: 12px 24px;
   clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%);
   transition: 0.3s;
   background: rgba(255, 255, 255, 0.02);
+  font-size: 0.9rem;
 }
 
 .v-api-inner:hover { 
@@ -191,9 +192,9 @@ body {
 
 .v-api-icon { 
   font-family: 'Oswald'; 
-  font-size: 2rem; 
+  font-size: 1.2rem; 
   color: var(--v-red); 
-  margin-bottom: 5px; 
+  margin-bottom: 3px; 
 }
 
 /* CONTACT */

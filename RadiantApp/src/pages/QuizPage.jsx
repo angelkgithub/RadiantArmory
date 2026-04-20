@@ -524,10 +524,10 @@ function QuizPage() {
           </div>
 
           {/* Center — Agent Result */}
-          <div className="flex-1 max-w-sm sm:max-w-md mx-auto lg:mx-0">
+          <div className="flex-1 max-w-sm sm:max-w-md mx-auto lg:mx-0 w-full flex flex-col gap-8">
             {/* Agent Portrait + Name */}
-            <div className="flex flex-col items-center mb-4 sm:mb-5">
-              <div className="relative">
+            <div className="flex flex-col items-center">
+              <div className="relative mb-4">
                 <div className="absolute inset-0 rounded-full bg-[#ff4654]/20 blur-xl scale-150"></div>
                 {result.displayIcon && (
                   <img
@@ -538,25 +538,25 @@ function QuizPage() {
                 )}
               </div>
 
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mt-2 tracking-wider text-center">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-wider text-center mb-3">
                 {result.displayName.toUpperCase()}
               </h1>
-              <div className="flex items-center gap-2 mt-1">
-                <div className="h-px w-6 sm:w-8 bg-[#ff4654]"></div>
-                <span className="text-[#ff4654] text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em]">
+              <div className="flex items-center gap-3">
+                <div className="h-px w-6 sm:w-8 bg-gradient-to-r from-transparent to-[#ff4654]"></div>
+                <span className="text-[#ff4654] text-[11px] sm:text-xs font-bold uppercase tracking-[0.3em] whitespace-nowrap">
                   {result.role.displayName}
                 </span>
-                <div className="h-px w-6 sm:w-8 bg-[#ff4654]"></div>
+                <div className="h-px w-6 sm:w-8 bg-gradient-to-l from-transparent to-[#ff4654]"></div>
               </div>
             </div>
 
             {/* Abilities — mobile only */}
             {result.abilities && result.abilities.filter(a => a.displayIcon).length > 0 && (
-              <div className="flex lg:hidden justify-center gap-2 mb-3 sm:mb-4">
+              <div className="flex lg:hidden justify-center gap-2">
                 {result.abilities.filter(a => a.displayIcon).slice(0, 4).map((ability, i) => (
                   <div
                     key={i}
-                    className="w-12 h-12 rounded-xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] flex items-center justify-center"
+                    className="w-12 h-12 rounded-xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] flex items-center justify-center hover:border-[#ff4654]/30 transition-colors duration-200"
                     title={`${ability.displayName} (${ability.slot === 'Ability1' ? 'Q' : ability.slot === 'Ability2' ? 'E' : ability.slot === 'Grenade' ? 'C' : ability.slot === 'Ultimate' ? 'X' : ability.slot})`}
                   >
                     <img src={ability.displayIcon} alt={ability.displayName} className="w-6 h-6 opacity-80" />
@@ -566,56 +566,56 @@ function QuizPage() {
             )}
 
             {/* Stat Cards */}
-            <div className="grid grid-cols-3 gap-2 mb-3 sm:mb-4">
-              <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl py-2.5 px-2 text-center">
+            <div className="grid grid-cols-3 gap-2.5">
+              <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl py-5 px-4 text-center hover:border-[#ff4654]/30 transition-colors duration-200">
                 <div className="text-[#ff4654] text-base sm:text-lg font-black">✦</div>
-                <p className="text-[9px] sm:text-[10px] text-gray-500 mt-0.5 uppercase tracking-wider">Playstyle</p>
-                <p className="text-white text-[11px] sm:text-xs font-bold">Match</p>
+                <p className="text-[9px] sm:text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">Playstyle</p>
+                <p className="text-white text-[11px] sm:text-xs font-bold mt-1">Match</p>
               </div>
-              <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl py-2.5 px-2 text-center">
+              <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl py-5 px-4 text-center hover:border-[#ff4654]/30 transition-colors duration-200">
                 <div className="text-[#ff4654] text-base sm:text-lg font-black">⚡</div>
-                <p className="text-[9px] sm:text-[10px] text-gray-500 mt-0.5 uppercase tracking-wider">Synergy</p>
-                <p className="text-white text-[11px] sm:text-xs font-bold">High</p>
+                <p className="text-[9px] sm:text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">Synergy</p>
+                <p className="text-white text-[11px] sm:text-xs font-bold mt-1">High</p>
               </div>
-              <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl py-2.5 px-2 text-center">
+              <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl py-5 px-4 text-center hover:border-[#ff4654]/30 transition-colors duration-200">
                 <div className="text-[#ff4654] text-base sm:text-lg font-black">🎯</div>
-                <p className="text-[9px] sm:text-[10px] text-gray-500 mt-0.5 uppercase tracking-wider">Impact</p>
-                <p className="text-white text-[11px] sm:text-xs font-bold">Strong</p>
+                <p className="text-[9px] sm:text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">Impact</p>
+                <p className="text-white text-[11px] sm:text-xs font-bold mt-1">Strong</p>
               </div>
             </div>
 
             {/* Description */}
-            <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl px-4 py-3 mb-4 sm:mb-5">
-              <p className="text-gray-300 text-[11px] sm:text-xs leading-relaxed text-center line-clamp-2">
+            <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl px-15 py-13">
+              <p className="text-gray-300 text-[12px] sm:text-xs leading-relaxed text-justify">
                 {result.description}
               </p>
             </div>
 
-            {/* Buttons */}
-            <div className="flex gap-3">
-              <button
-                onClick={restart}
-                className="group relative flex-1 py-3 sm:py-3.5 overflow-hidden rounded-xl font-bold text-sm sm:text-base text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#ff4654] to-[#ff6b6b]"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#ff6b6b] to-[#ff4654] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute inset-[1px] rounded-[11px] bg-gradient-to-b from-white/10 to-transparent opacity-50 pointer-events-none"></div>
-                <span className="relative flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                  RETRY
-                </span>
-              </button>
-              <button
-                className="group relative flex-1 py-3 sm:py-3.5 overflow-hidden rounded-xl font-bold text-sm sm:text-base text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <div className="absolute inset-0 border border-[#ff4654]/40 rounded-xl bg-[#ff4654]/5"></div>
-                <div className="absolute inset-0 bg-[#ff4654]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
-                <span className="relative flex items-center justify-center gap-2 text-[#ff4654] group-hover:text-white transition-colors duration-300">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
-                  SAVE
-                </span>
-              </button>
-            </div>
+            {/* Button */}
+            <button
+              onClick={restart}
+              className="w-full h-12 rounded-xl border-2 border-[#ff4654] relative overflow-hidden transition-all duration-500 ease-in hover:scale-[1.02] active:scale-[0.98] group"
+              style={{
+                background: 'transparent',
+                cursor: 'pointer',
+              }}
+            >
+              {/* Skew gradient backgrounds */}
+              <div 
+                className="absolute top-0 -left-2.5 w-0 h-full bg-[#ff4654] transition-all duration-500 group-hover:w-1/2 skew-x-12 z-0"
+              />
+              <div 
+                className="absolute top-0 -right-2.5 w-0 h-full bg-[#ff6b6b] transition-all duration-500 group-hover:w-1/2 -skew-x-12 z-0"
+              />
+              
+              {/* Text and icon */}
+              <span className="relative z-10 flex items-center justify-center gap-2 h-full text-[#ff4654] group-hover:text-white transition-colors duration-300 font-bold text-sm sm:text-base uppercase tracking-wider">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                TRY ANOTHER AGENT
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -656,9 +656,24 @@ function QuizPage() {
               <button
                 key={index}
                 onClick={() => handleAnswerClick(index)}
-                className="w-full py-4 sm:py-5 px-6 bg-white/[0.03] border border-white/10 text-gray-300 font-semibold text-base sm:text-lg rounded-xl hover:bg-[#ff4654]/10 hover:border-[#ff4654]/50 hover:text-white transition-all duration-200 text-center"
+                className="w-full flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-4 bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl hover:border-[#ff4654]/30 hover:bg-white/[0.08] transition-all duration-200 group text-left"
               >
-                {option}
+                {/* Number indicator */}
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-black/40 border border-white/10 flex items-center justify-center shrink-0 group-hover:border-[#ff4654]/40 group-hover:bg-[#ff4654]/10 transition-all duration-200">
+                  <span className="text-[#ff4654] font-bold text-xs sm:text-sm">{index + 1}</span>
+                </div>
+                {/* Option text */}
+                <div className="min-w-0 flex-1">
+                  <p className="text-gray-300 group-hover:text-white font-semibold text-xs sm:text-sm line-clamp-2 transition-colors duration-200">
+                    {option}
+                  </p>
+                </div>
+                {/* Arrow indicator */}
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white/20 group-hover:border-[#ff4654]/50 flex items-center justify-center shrink-0 transition-all duration-200">
+                  <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white/40 group-hover:text-[#ff4654] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </button>
             ))}
           </div>

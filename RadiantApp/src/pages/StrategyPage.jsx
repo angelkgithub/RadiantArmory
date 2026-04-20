@@ -216,21 +216,26 @@ function StrategyPage() {
             <div className="flex flex-col sm:flex-row items-stretch gap-3 sm:gap-4 max-w-2xl mx-auto">
               <button
                 onClick={generateStrategy}
-                className="group relative flex-1 py-5 overflow-hidden rounded-2xl font-black text-lg text-white transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] shadow-[0_0_40px_rgba(255,70,84,0.3)]"
+                className="group relative flex-1 h-12 overflow-hidden rounded-xl border-2 border-[#ff4654] transition-all duration-500 ease-in text-white hover:scale-[1.03] active:scale-[0.97]"
+                style={{ background: 'transparent' }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#ff4654] to-[#ff6b6b]"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#ff6b6b] to-[#ff4654] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute inset-0 opacity-20 bg-[length:4px_4px]" style={{backgroundImage: 'linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.1) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.1) 75%)'}}></div>
-                <span className="relative flex items-center justify-center gap-3 tracking-[0.2em]">
+                <div className="absolute top-0 -left-2.5 w-0 h-full bg-[#ff4654] transition-all duration-500 group-hover:w-1/2 skew-x-12 z-0" />
+                <div className="absolute top-0 -right-2.5 w-0 h-full bg-[#ff6b6b] transition-all duration-500 group-hover:w-1/2 -skew-x-12 z-0" />
+                <span className="relative z-10 flex items-center justify-center gap-3 h-full text-[#ff4654] group-hover:text-white transition-colors duration-300 tracking-[0.2em] font-black uppercase">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                   RE-ROLL
                 </span>
               </button>
               <button
                 onClick={reset}
-                className="flex-1 py-5 border border-white/10 text-gray-400 font-black text-lg rounded-2xl hover:bg-white/5 hover:text-white transition-all uppercase tracking-[0.2em]"
+                className="group relative flex-1 h-12 overflow-hidden rounded-xl border-2 border-white/20 transition-all duration-500 ease-in text-gray-400 hover:scale-[1.03] active:scale-[0.97] hover:border-[#ff4654]"
+                style={{ background: 'transparent' }}
               >
-                Start Over
+                <div className="absolute top-0 -left-2.5 w-0 h-full bg-[#ff4654] transition-all duration-500 group-hover:w-1/2 skew-x-12 z-0" />
+                <div className="absolute top-0 -right-2.5 w-0 h-full bg-[#ff6b6b] transition-all duration-500 group-hover:w-1/2 -skew-x-12 z-0" />
+                <span className="relative z-10 flex items-center justify-center h-full group-hover:text-white transition-colors duration-300 tracking-[0.2em] font-black uppercase">
+                  Start Over
+                </span>
               </button>
             </div>
           </div>
@@ -318,22 +323,20 @@ function StrategyPage() {
                 <button
                   onClick={() => selectedMap && setStep(2)}
                   disabled={!selectedMap}
-                  className={`group relative w-full sm:w-auto sm:min-w-[280px] px-12 py-5 overflow-hidden rounded-2xl font-black text-lg transition-all duration-300 ${
+                  className={`group relative w-full sm:w-auto sm:min-w-[280px] h-12 px-12 overflow-hidden rounded-xl border-2 transition-all duration-500 ease-in ${
                     selectedMap
-                      ? 'text-white hover:scale-[1.03] active:scale-[0.97] shadow-[0_0_40px_rgba(255,70,84,0.3)]'
-                      : 'text-gray-600 cursor-not-allowed'
+                      ? 'border-[#ff4654] text-white hover:scale-[1.03] active:scale-[0.97]'
+                      : 'border-gray-600 text-gray-600 cursor-not-allowed'
                   }`}
+                  style={{ background: selectedMap ? 'transparent' : 'transparent' }}
                 >
-                  {selectedMap ? (
+                  {selectedMap && (
                     <>
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#ff4654] to-[#ff6b6b]"></div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#ff6b6b] to-[#ff4654] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <div className="absolute inset-0 opacity-20 bg-[length:4px_4px]" style={{backgroundImage: 'linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.1) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.1) 75%)'}}></div>
+                      <div className="absolute top-0 -left-2.5 w-0 h-full bg-[#ff4654] transition-all duration-500 group-hover:w-1/2 skew-x-12 z-0" />
+                      <div className="absolute top-0 -right-2.5 w-0 h-full bg-[#ff6b6b] transition-all duration-500 group-hover:w-1/2 -skew-x-12 z-0" />
                     </>
-                  ) : (
-                    <div className="absolute inset-0 bg-white/5 border border-white/10 rounded-2xl"></div>
                   )}
-                  <span className="relative flex items-center justify-center gap-3 tracking-[0.2em] uppercase">
+                  <span className="relative z-10 flex items-center justify-center gap-3 h-full text-[#ff4654] group-hover:text-white transition-colors duration-300 tracking-[0.2em] uppercase font-black">
                     CONTINUE
                     <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                   </span>
@@ -436,9 +439,12 @@ function StrategyPage() {
               <div className="mt-10 flex flex-col sm:flex-row items-stretch gap-3 sm:gap-4">
                 <button
                   onClick={() => setStep(1)}
-                  className="flex-1 px-8 py-5 border border-white/10 text-gray-400 font-black text-lg rounded-2xl hover:bg-white/5 hover:text-white transition-all tracking-wider"
+                  className="group relative flex-1 h-12 overflow-hidden rounded-xl border-2 border-white/20 transition-all duration-500 ease-in text-gray-400 hover:scale-[1.03] active:scale-[0.97] hover:border-white/40"
+                  style={{ background: 'transparent' }}
                 >
-                  <span className="flex items-center justify-center gap-2">
+                  <div className="absolute top-0 -left-2.5 w-0 h-full bg-gradient-to-r from-transparent to-white transition-all duration-500 group-hover:w-1/2 skew-x-12 z-0" />
+                  <div className="absolute top-0 -right-2.5 w-0 h-full bg-gradient-to-l from-transparent to-white transition-all duration-500 group-hover:w-1/2 -skew-x-12 z-0" />
+                  <span className="relative z-10 flex items-center justify-center h-full gap-2 text-gray-400 group-hover:text-red transition-colors duration-300 tracking-wider font-black uppercase">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 17l-5-5m0 0l5-5m-5 5h12" /></svg>
                     BACK
                   </span>
@@ -446,22 +452,22 @@ function StrategyPage() {
                 <button
                   onClick={generateStrategy}
                   disabled={selectedAgents.length < 5}
-                  className={`group relative flex-1 px-12 py-5 overflow-hidden rounded-2xl font-black text-lg transition-all duration-300 ${
+                  className={`group relative flex-1 h-12 overflow-hidden rounded-xl border-2 transition-all duration-500 ease-in ${
                     selectedAgents.length === 5
-                      ? 'text-white hover:scale-[1.03] active:scale-[0.97] shadow-[0_0_40px_rgba(255,70,84,0.3)]'
-                      : 'text-gray-600 cursor-not-allowed'
+                      ? 'border-[#ff4654] text-white hover:scale-[1.03] active:scale-[0.97]'
+                      : 'border-gray-600 text-gray-600 cursor-not-allowed'
                   }`}
+                  style={{ background: 'transparent' }}
                 >
-                  {selectedAgents.length === 5 ? (
+                  {selectedAgents.length === 5 && (
                     <>
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#ff4654] to-[#ff6b6b]"></div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#ff6b6b] to-[#ff4654] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <div className="absolute inset-0 opacity-20 bg-[length:4px_4px]" style={{backgroundImage: 'linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.1) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.1) 75%)'}}></div>
+                      <div className="absolute top-0 -left-2.5 w-0 h-full bg-[#ff4654] transition-all duration-500 group-hover:w-1/2 skew-x-12 z-0" />
+                      <div className="absolute top-0 -right-2.5 w-0 h-full bg-[#ff6b6b] transition-all duration-500 group-hover:w-1/2 -skew-x-12 z-0" />
                     </>
-                  ) : (
-                    <div className="absolute inset-0 bg-white/5 border border-white/10 rounded-2xl"></div>
                   )}
-                  <span className="relative flex items-center justify-center gap-3 tracking-[0.2em] uppercase">
+                  <span className={`relative z-10 flex items-center justify-center h-full gap-3 transition-colors duration-300 tracking-[0.2em] font-black uppercase ${
+                    selectedAgents.length === 5 ? 'text-[#ff4654] group-hover:text-white' : ''
+                  }`}>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                     GENERATE
                   </span>

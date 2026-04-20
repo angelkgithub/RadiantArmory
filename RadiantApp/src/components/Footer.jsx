@@ -19,7 +19,7 @@ const Footer = () => {
           {/* API LINK */}
           <div className="v-footer-section v-center">
             <div className="v-tag">// EXTERNAL_SOURCE</div>
-            <a href="https://playvalorant.com/en-us/news/dev/dev-valorant-api-and-beyond/" className="v-api-btn">
+            <a href="https://valorant-api.com/" className="v-api-btn">
               <div className="v-api-inner">
                 <div className="v-api-icon">V</div>
                 <span>VALORANT API</span>
