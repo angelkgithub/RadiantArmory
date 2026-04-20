@@ -488,139 +488,119 @@ function QuizPage() {
   }
 
   if (result) {
-    return (
-      <div className="h-screen px-4 flex items-center justify-center relative overflow-hidden" style={bgStyle}>
-        <div className="absolute inset-0 bg-black/60"></div>
+  return (
+    <div className="h-screen px-6 flex items-center justify-center relative overflow-hidden font-sans" style={bgStyle}>
+      
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/70 to-[#111823]"></div>
 
-        {/* Large ghost agent portrait */}
-        {result.fullPortrait && (
-          <img
-            src={result.fullPortrait}
-            alt=""
-            className="absolute right-[-10%] top-1/2 -translate-y-1/2 h-[110%] object-contain opacity-[0.12] pointer-events-none select-none"
-          />
-        )}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+        <span className="text-[25vw] font-black text-white/[0.02] select-none uppercase tracking-tighter">
+          {result.displayName}
+        </span>
+      </div>
 
-        <div className="w-full max-w-5xl mx-auto relative z-10 flex flex-col lg:flex-row items-center lg:items-stretch gap-6 lg:gap-10">
-          {/* Left — Abilities Panel */}
-          <div className="hidden lg:flex flex-col justify-center gap-3 w-56 shrink-0">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 mb-1">Abilities</h3>
+      {result.fullPortrait && (
+        <img
+          src={result.fullPortrait}
+          alt=""
+          className="absolute right-[-8%] bottom-[-15%] h-[130%] object-contain opacity-[0.15] pointer-events-none select-none hidden lg:block animate-pulse-slow"
+        />
+      )}
+
+      <div className="w-full max-w-7xl mx-auto relative z-10 flex flex-col lg:flex-row items-center lg:items-center gap-12 xl:gap-16">
+        
+        <div className="hidden lg:flex flex-col gap-6 w-64 shrink-0">
+          <div className="space-y-1.5">
+  
+            <h3 className="text-[12px] font-bold uppercase tracking-[0.4em] text-[#ff4654]">Tactical Profile</h3>
+            <div className="h-1 w-16 bg-[#ff4654]"></div>
+          </div>
+          
+          <div className="flex flex-col gap-3">
             {result.abilities && result.abilities.filter(a => a.displayIcon).slice(0, 4).map((ability, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl px-3 py-2.5 hover:border-[#ff4654]/30 transition-colors duration-200"
+                className="group flex items-center gap-4 bg-white/[0.03] backdrop-blur-md border border-white/[0.08] rounded-tr-3xl rounded-bl-3xl p-4 hover:bg-[#ff4654]/10 hover:border-[#ff4654]/40 transition-all duration-300"
               >
-                <div className="w-10 h-10 rounded-lg bg-black/40 border border-white/10 flex items-center justify-center shrink-0">
-                  <img src={ability.displayIcon} alt={ability.displayName} className="w-6 h-6 opacity-80" />
+                <div className="w-12 h-12 rounded-lg bg-black/60 border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <img src={ability.displayIcon} alt={ability.displayName} className="w-7 h-7 opacity-70 group-hover:opacity-100" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-white text-xs font-semibold truncate">{ability.displayName}</p>
-                  <p className="text-gray-500 text-[10px] uppercase tracking-wider">
-                    {ability.slot === 'Ability1' ? 'Q' : ability.slot === 'Ability2' ? 'E' : ability.slot === 'Grenade' ? 'C' : ability.slot === 'Ultimate' ? 'X' : ability.slot}
-                  </p>
+                  <p className="text-white text-[12px] font-bold uppercase tracking-wider truncate">{ability.displayName}</p>
+                  <p className="text-gray-500 text-[10px] font-black italic">{ability.slot.replace('Ability', 'KEY ')}</p>
                 </div>
               </div>
             ))}
           </div>
+        </div>
 
-          {/* Center — Agent Result */}
-          <div className="flex-1 max-w-sm sm:max-w-md mx-auto lg:mx-0 w-full flex flex-col gap-8">
-            {/* Agent Portrait + Name */}
-            <div className="flex flex-col items-center">
-              <div className="relative mb-4">
-                <div className="absolute inset-0 rounded-full bg-[#ff4654]/20 blur-xl scale-150"></div>
+        <div className="flex-1 flex flex-col items-center lg:items-center">
+          <div className="relative group mb-8">
+            <div className="absolute inset-0 rounded-full bg-[#ff4654]/30 blur-[70px] group-hover:bg-[#ff4654]/50 transition-all duration-700"></div>
+            
+            <div className="relative p-3 border-2 border-dashed border-white/20 rounded-full animate-spin-slow group-hover:border-[#ff4654]/50">
                 {result.displayIcon && (
                   <img
                     src={result.displayIcon}
                     alt={result.displayName}
-                    className="relative w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-[0_0_30px_rgba(255,70,84,0.4)]"
+                    className="w-40 h-40 sm:w-56 sm:h-56 xl:w-64 xl:h-64 object-contain drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] transform transition-transform duration-500 group-hover:scale-110"
                   />
                 )}
-              </div>
-
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-wider text-center mb-3">
-                {result.displayName.toUpperCase()}
-              </h1>
-              <div className="flex items-center gap-3">
-                <div className="h-px w-6 sm:w-8 bg-gradient-to-r from-transparent to-[#ff4654]"></div>
-                <span className="text-[#ff4654] text-[11px] sm:text-xs font-bold uppercase tracking-[0.3em] whitespace-nowrap">
-                  {result.role.displayName}
-                </span>
-                <div className="h-px w-6 sm:w-8 bg-gradient-to-l from-transparent to-[#ff4654]"></div>
-              </div>
             </div>
+          </div>
 
-            {/* Abilities — mobile only */}
-            {result.abilities && result.abilities.filter(a => a.displayIcon).length > 0 && (
-              <div className="flex lg:hidden justify-center gap-2">
-                {result.abilities.filter(a => a.displayIcon).slice(0, 4).map((ability, i) => (
-                  <div
-                    key={i}
-                    className="w-12 h-12 rounded-xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] flex items-center justify-center hover:border-[#ff4654]/30 transition-colors duration-200"
-                    title={`${ability.displayName} (${ability.slot === 'Ability1' ? 'Q' : ability.slot === 'Ability2' ? 'E' : ability.slot === 'Grenade' ? 'C' : ability.slot === 'Ultimate' ? 'X' : ability.slot})`}
-                  >
-                    <img src={ability.displayIcon} alt={ability.displayName} className="w-6 h-6 opacity-80" />
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Stat Cards */}
-            <div className="grid grid-cols-3 gap-2.5">
-              <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl py-5 px-4 text-center hover:border-[#ff4654]/30 transition-colors duration-200">
-                <div className="text-[#ff4654] text-base sm:text-lg font-black">✦</div>
-                <p className="text-[9px] sm:text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">Playstyle</p>
-                <p className="text-white text-[11px] sm:text-xs font-bold mt-1">Match</p>
-              </div>
-              <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl py-5 px-4 text-center hover:border-[#ff4654]/30 transition-colors duration-200">
-                <div className="text-[#ff4654] text-base sm:text-lg font-black">⚡</div>
-                <p className="text-[9px] sm:text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">Synergy</p>
-                <p className="text-white text-[11px] sm:text-xs font-bold mt-1">High</p>
-              </div>
-              <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl py-5 px-4 text-center hover:border-[#ff4654]/30 transition-colors duration-200">
-                <div className="text-[#ff4654] text-base sm:text-lg font-black">🎯</div>
-                <p className="text-[9px] sm:text-[10px] text-gray-500 mt-1.5 uppercase tracking-wider">Impact</p>
-                <p className="text-white text-[11px] sm:text-xs font-bold mt-1">Strong</p>
-              </div>
-            </div>
-
-            {/* Description */}
-            <div className="bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl px-15 py-13">
-              <p className="text-gray-300 text-[12px] sm:text-xs leading-relaxed text-justify">
-                {result.description}
-              </p>
-            </div>
-
-            {/* Button */}
-            <button
-              onClick={restart}
-              className="w-full h-12 rounded-xl border-2 border-[#ff4654] relative overflow-hidden transition-all duration-500 ease-in hover:scale-[1.02] active:scale-[0.98] group"
-              style={{
-                background: 'transparent',
-                cursor: 'pointer',
-              }}
-            >
-              {/* Skew gradient backgrounds */}
-              <div 
-                className="absolute top-0 -left-2.5 w-0 h-full bg-[#ff4654] transition-all duration-500 group-hover:w-1/2 skew-x-12 z-0"
-              />
-              <div 
-                className="absolute top-0 -right-2.5 w-0 h-full bg-[#ff6b6b] transition-all duration-500 group-hover:w-1/2 -skew-x-12 z-0"
-              />
-              
-              {/* Text and icon */}
-              <span className="relative z-10 flex items-center justify-center gap-2 h-full text-[#ff4654] group-hover:text-white transition-colors duration-300 font-bold text-sm sm:text-base uppercase tracking-wider">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                TRY ANOTHER AGENT
+          <div className="text-center">
+            <h1 className="text-5xl sm:text-8xl xl:text-9xl font-black text-white tracking-tighter italic uppercase mb-2 drop-shadow-lg">
+              {result.displayName}
+            </h1>
+            <div className="inline-flex items-center gap-5 px-8 py-1.5 bg-[#ff4654] text-white skew-x-[-12deg]">
+              <span className="text-sm font-black uppercase tracking-[0.2em] skew-x-[12deg]">
+                {result.role.displayName}
               </span>
-            </button>
+            </div>
           </div>
         </div>
+
+        <div className="w-full lg:w-96 flex flex-col gap-8">
+          <div className="bg-white/[0.03] backdrop-blur-xl border-l-4 border-l-[#ff4654] border-y border-r border-white/10 p-7 xl:p-8 rounded-r-2xl">
+            <h4 className="text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-4 italic">// Biography</h4>
+            <p className="text-gray-300 text-sm leading-relaxed text-left">
+              {result.description}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { label: 'Playstyle', val: 'Match', icon: '✦' },
+              { label: 'Synergy', val: 'High', icon: '⚡' },
+              { label: 'Impact', val: 'Strong', icon: '🎯' }
+            ].map((stat, i) => (
+              <div key={i} className="bg-white/[0.04] border border-white/5 p-4 rounded-xl text-center hover:bg-white/10 transition-colors">
+                <span className="text-[#ff4654] text-xl">{stat.icon}</span>
+                <p className="text-[9px] text-gray-500 uppercase font-bold mt-1.5">{stat.label}</p>
+                <p className="text-white text-[12px] font-black">{stat.val}</p>
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={restart}
+            className="group relative w-full h-16 bg-transparent border-2 border-white/20 hover:border-[#ff4654] transition-all duration-300 overflow-hidden"
+          >
+            <div className="absolute inset-0 w-0 bg-[#ff4654] group-hover:w-full transition-all duration-500 ease-out"></div>
+            {/* BIGGER: Text size */}
+            <span className="relative z-10 text-white font-black italic tracking-widest text-base flex items-center justify-center gap-3">
+              REDEPLOY AGENT
+              <svg className="w-5 h-5 transform group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </span>
+          </button>
+        </div>
+
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   const question = QUIZ_QUESTIONS[currentQuestion];
   const progress = ((currentQuestion) / QUIZ_QUESTIONS.length) * 100;
@@ -656,22 +636,35 @@ function QuizPage() {
               <button
                 key={index}
                 onClick={() => handleAnswerClick(index)}
-                className="w-full flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-4 bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] rounded-xl hover:border-[#ff4654]/30 hover:bg-white/[0.08] transition-all duration-200 group text-left"
+                // Added 'group' for child animations and 'active:scale-95' for tactile feedback
+                className="w-full relative flex items-center gap-4 px-5 py-4 bg-white/[0.03] hover:bg-[#ff4654]/[0.08] border border-white/10 hover:border-[#ff4654]/50 rounded-xl transition-all duration-200 group active:scale-[0.98] overflow-hidden"
               >
-                {/* Number indicator */}
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-black/40 border border-white/10 flex items-center justify-center shrink-0 group-hover:border-[#ff4654]/40 group-hover:bg-[#ff4654]/10 transition-all duration-200">
-                  <span className="text-[#ff4654] font-bold text-xs sm:text-sm">{index + 1}</span>
+                {/* Hover Background Accent - A subtle glow that follows the hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#ff4654]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Number Indicator */}
+                <div className="relative w-10 h-10 rounded-lg bg-black/40 border border-white/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:border-[#ff4654]/60 group-hover:shadow-[0_0_15px_rgba(255,70,84,0.3)] transition-all duration-300">
+                  <span className="text-gray-400 group-hover:text-[#ff4654] font-black text-sm italic transition-colors">
+                    0{index + 1}
+                  </span>
                 </div>
-                {/* Option text */}
-                <div className="min-w-0 flex-1">
-                  <p className="text-gray-300 group-hover:text-white font-semibold text-xs sm:text-sm line-clamp-2 transition-colors duration-200">
+
+                {/* Option Text */}
+                <div className="relative min-w-0 flex-1">
+                  <p className="text-gray-300 group-hover:text-white font-bold text-sm sm:text-base leading-tight transition-colors duration-200">
                     {option}
                   </p>
                 </div>
-                {/* Arrow indicator */}
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-white/20 group-hover:border-[#ff4654]/50 flex items-center justify-center shrink-0 transition-all duration-200">
-                  <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white/40 group-hover:text-[#ff4654] transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+
+                {/* Right Icon - More dynamic arrow */}
+                <div className="relative transform translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                  <svg 
+                    className="w-5 h-5 text-[#ff4654]" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </div>
               </button>

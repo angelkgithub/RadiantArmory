@@ -9,12 +9,11 @@ function MapPlannerPage() {
   const [selectedMap, setSelectedMap] = useState(null);
   const [selectedAgent, setSelectedAgent] = useState(null);
   const [agentImages, setAgentImages] = useState({});
-  const { data: maps = [], isLoading } = useGetAllMapsQuery();
-  const { data: agents = [] } = useGetAllAgentsQuery();
+  const { data: maps = [], isLoading: mapsLoading } = useGetAllMapsQuery();
+  const { data: agents = [], isLoading: agentsLoading } = useGetAllAgentsQuery();
 
-  const playableMaps = maps.filter(m => m.displayName && m.mapUrl && !m.displayName.includes('Range') && !m.displayName.includes('Skirmish') && !m.displayName.includes('Basic Training'));
+  const playableMaps = maps.filter(m => m.displayName && m.mapUrl && !['Range', 'Skirmish', 'Basic Training'].some(exclude => m.displayName.includes(exclude)));
 
-  // Preload agent icons for canvas drawing
   useEffect(() => {
     agents.forEach(agent => {
       if (agent.displayIcon && !agentImages[agent.uuid]) {
@@ -26,7 +25,7 @@ function MapPlannerPage() {
         img.src = agent.displayIcon;
       }
     });
-  }, [agents]);
+  }, [agents, agentImages]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -34,6 +33,7 @@ function MapPlannerPage() {
 
     const ctx = canvas.getContext('2d');
     const img = new Image();
+    img.crossOrigin = 'anonymous';
     img.onload = () => {
       canvas.width = img.width;
       canvas.height = img.height;
@@ -56,33 +56,28 @@ function MapPlannerPage() {
     const ctx = canvas.getContext('2d');
 
     if (selectedTool === 'agent' && selectedAgent) {
-      const iconSize = 48;
+      const iconSize = 64; 
       const cachedImg = agentImages[selectedAgent.uuid];
       if (cachedImg) {
-        // Circle background
         ctx.shadowColor = '#ff4654';
         ctx.shadowBlur = 12;
         ctx.beginPath();
         ctx.arc(x, y, iconSize / 2 + 4, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(17, 24, 35, 0.85)';
+        ctx.fillStyle = 'rgba(17, 24, 35, 0.9)';
         ctx.fill();
         ctx.strokeStyle = '#ff4654';
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.shadowBlur = 0;
-        // Agent icon
         ctx.drawImage(cachedImg, x - iconSize / 2, y - iconSize / 2, iconSize, iconSize);
       }
       return;
     }
 
     if (selectedTool === 'spike') {
-      // Draw spike pin marker
-      const size = 28;
-      // Outer glow
+      const size = 32;
       ctx.shadowColor = '#ff4654';
-      ctx.shadowBlur = 20;
-      // Diamond shape
+      ctx.shadowBlur = 15;
       ctx.beginPath();
       ctx.moveTo(x, y - size);
       ctx.lineTo(x + size, y);
@@ -92,9 +87,8 @@ function MapPlannerPage() {
       ctx.fillStyle = '#ff4654';
       ctx.fill();
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 2;
       ctx.stroke();
-      // Inner spike text
       ctx.shadowBlur = 0;
       ctx.fillStyle = '#ffffff';
       ctx.font = `bold ${size}px sans-serif`;
@@ -105,14 +99,14 @@ function MapPlannerPage() {
     }
 
     if (selectedTool === 'smoke') {
-      ctx.shadowColor = 'rgba(139, 90, 43, 0.8)';
+      ctx.shadowColor = 'rgba(139, 90, 43, 0.7)';
       ctx.shadowBlur = 20;
       ctx.beginPath();
-      ctx.arc(x, y, 50, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(139, 90, 43, 0.4)';
+      ctx.arc(x, y, 60, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(139, 90, 43, 0.45)';
       ctx.fill();
-      ctx.strokeStyle = 'rgba(200, 150, 80, 0.6)';
-      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'rgba(200, 150, 80, 0.5)';
+      ctx.lineWidth = 4;
       ctx.stroke();
       ctx.shadowBlur = 0;
       return;
@@ -144,20 +138,14 @@ function MapPlannerPage() {
     }
   };
 
-  const stopDrawing = () => {
-    setIsDrawing(false);
-  };
+  const stopDrawing = () => setIsDrawing(false);
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas || !selectedMap) return;
-
     const ctx = canvas.getContext('2d');
-    // Clear entire canvas first
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Redraw the map background
     const img = new Image();
+    img.crossOrigin = 'anonymous';
     img.onload = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0);
@@ -168,238 +156,174 @@ function MapPlannerPage() {
   const saveStrategy = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const image = canvas.toDataURL('image/png');
     const link = document.createElement('a');
     link.href = image;
-    link.download = `strategy-${selectedMap.displayName}.png`;
+    link.download = `plan-${selectedMap?.displayName || 'strategy'}.png`;
     link.click();
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[#111823] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-2 border-[#ff4654] border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-gray-400 text-sm tracking-widest uppercase">Loading maps...</p>
-        </div>
-      </div>
-    );
-  }
+  if (mapsLoading || agentsLoading) return (
+    <div className="min-h-screen bg-[#111823] flex items-center justify-center text-white italic tracking-widest uppercase font-black">
+      Loading Operations...
+    </div>
+  );
 
   return (
-    <div className="min-h-screen relative">
-      {/* Background image */}
-      <img src="https://res.cloudinary.com/dc3erz7jd/image/upload/v1776518659/1868859-3840x2160-desktop-4k-valorant-background-image_qkrnf1.jpg" alt="" className="fixed inset-0 w-full h-full object-cover" style={{ zIndex: 0 }} />
-      <div className="fixed inset-0 bg-[#111823]/80" style={{ zIndex: 0 }} />
+    <div className="min-h-screen bg-[#111823] text-white flex flex-col items-center justify-center p-6 md:p-10 overflow-x-hidden relative">
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff4654] rounded-full blur-[200px] opacity-[0.03] pointer-events-none" />
 
-      <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-        {/* Header */}
-        <div className="text-center mb-10 sm:mb-14">
-          <p className="text-[#ff4654] text-xs font-bold tracking-[0.3em] uppercase mb-3">Tactical Planning</p>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-wider mb-3">
-            MAP
-          </h1>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff4654] to-[#ff6b6b] tracking-wider">
-            PLANNER
-          </h1>
+      <div className="relative z-10 w-full max-w-[1440px]">
+        <div className="text-center mb-10">
+          <p className="text-[#ff4654] font-black tracking-[0.5em] text-[10px] mb-3 uppercase">Field Operations</p>
+          <h1 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter">Map <span className="text-[#ff4654]">Planner</span></h1>
         </div>
 
-        {/* Map Selection */}
-        {!selectedMap && (
-          <div className="w-full">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-white font-black text-xl sm:text-2xl tracking-wider">SELECT MAP</h2>
-                <p className="text-gray-500 text-xs mt-1">Choose a map to start planning</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {playableMaps.map(map => (
-                <button
-                  key={map.uuid}
-                  onClick={() => setSelectedMap(map)}
-                  className="group relative overflow-hidden rounded-xl border border-white/5 hover:border-white/15 transition-all duration-300 hover:scale-[1.03]"
+        <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-10 items-start">
+          
+          {/* LEFT: COMMAND PANEL (ADJUSTED FOR SIZE) */}
+          <div className="space-y-10">
+            {/* Map Selection */}
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-8 backdrop-blur-xl">
+              <h2 className="text-2xl font-black italic uppercase tracking-widest mb-6 flex items-center gap-3">
+                <span className="text-[#ff4654] text-xs not-italic font-mono bg-[#ff4654]/10 px-2 py-1 rounded">01</span> Map
+              </h2>
+              <div className="relative">
+                <select 
+                  className="w-full bg-[#1a2332] border border-white/10 rounded-xl p-5 outline-none focus:border-[#ff4654] transition-all appearance-none cursor-pointer font-black uppercase tracking-widest text-[13px] shadow-lg"
+                  value={selectedMap?.uuid || ''}
+                  onChange={(e) => setSelectedMap(playableMaps.find(m => m.uuid === e.target.value))}
                 >
-                  <div className="aspect-[16/10] relative">
-                    {map.splash ? (
-                      <img src={map.splash} alt={map.displayName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    ) : (
-                      <div className="w-full h-full bg-[#1a2332]"></div>
-                    )}
-                    <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-all duration-300"></div>
-                    <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-                      <p className="text-white font-bold text-sm tracking-wide">{map.displayName}</p>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Planner - 2 Column Layout */}
-        {selectedMap && (
-          <div className="max-w-[1600px] mx-auto">
-            {/* Map name bar */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={() => setSelectedMap(null)}
-                  className="w-10 h-10 rounded-xl border border-white/10 bg-white/[0.03] flex items-center justify-center text-gray-400 hover:text-white hover:border-white/20 transition-all"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-                </button>
-                <div>
-                  <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em]">Planning on</p>
-                  <h2 className="text-white font-black text-xl tracking-wider">{selectedMap.displayName}</h2>
-                </div>
+                  <option value="" className="bg-[#111823]">Select Deployment Zone</option>
+                  {playableMaps.map(m => (
+                    <option key={m.uuid} value={m.uuid} className="bg-[#111823]">{m.displayName}</option>
+                  ))}
+                </select>
+                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">▼</div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-4">
-              {/* Left Sidebar - Tools */}
-              <div className="space-y-3">
-                {/* Tools Section */}
-                <div className="bg-[#1a2332] border border-white/5 rounded-2xl p-4">
-                  <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em] mb-3">Tools</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {[
-                      { id: 'draw', icon: '✏️', label: 'Draw' },
-                      { id: 'smoke', icon: '💨', label: 'Smoke' },
-                      { id: 'spike', icon: '💣', label: 'Spike' },
-                      { id: 'agent', icon: '🎭', label: 'Agent' },
-                    ].map(tool => (
+            {/* Toolkit - Buttons and Text sized up */}
+            <div className="bg-white/5 border border-white/10 rounded-[2rem] p-8 backdrop-blur-xl">
+              <h2 className="text-2xl font-black italic uppercase tracking-widest mb-6 flex items-center gap-3">
+                <span className="text-[#ff4654] text-xs not-italic font-mono bg-[#ff4654]/10 px-2 py-1 rounded">02</span> Tools
+              </h2>
+              
+              <div className="flex flex-col gap-4 mb-8">
+                {[
+                  { id: 'draw', icon: '✏️', label: 'Tactical Markings' },
+                  { id: 'smoke', icon: '💨', label: 'Smoke Coverage' },
+                  { id: 'spike', icon: '💣', label: 'Spike Placement' },
+                  { id: 'agent', icon: '🎭', label: 'Agent Position' },
+                ].map(tool => (
+                  <button
+                    key={tool.id}
+                    onClick={() => setSelectedTool(tool.id)}
+                    className={`flex items-center gap-6 px-6 py-5 rounded-2xl border font-black italic uppercase text-[12px] tracking-[0.2em] transition-all duration-300 ${
+                      selectedTool === tool.id
+                        ? 'border-[#ff4654] bg-[#ff4654]/15 text-white shadow-[0_0_25px_rgba(255,70,84,0.25)] scale-[1.02]'
+                        : 'border-white/5 bg-white/5 text-gray-500 hover:border-white/20 hover:text-white'
+                    }`}
+                  >
+                    <span className="text-2xl">{tool.icon}</span>
+                    {tool.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Tool Options */}
+              {selectedTool === 'draw' && (
+                <div className="pt-6 border-t border-white/5 animate-in fade-in zoom-in-95">
+                  <p className="text-[11px] font-black uppercase text-[#ff4654] tracking-[0.3em] mb-5">Select Color</p>
+                  <div className="flex items-center justify-between px-1">
+                    {['#ff4654', '#3b82f6', '#22c55e', '#eab308', '#ffffff'].map(color => (
                       <button
-                        key={tool.id}
-                        onClick={() => setSelectedTool(tool.id)}
-                        className={`flex items-center gap-2.5 px-3 py-3 rounded-xl border font-bold text-sm transition-all duration-200 ${
-                          selectedTool === tool.id
-                            ? 'border-[#ff4654]/50 bg-[#ff4654]/10 text-white ring-1 ring-[#ff4654]/20'
-                            : 'border-white/5 bg-white/[0.02] text-gray-400 hover:border-white/15 hover:text-white'
+                        key={color}
+                        onClick={() => setDrawColor(color)}
+                        className={`w-10 h-10 rounded-full border-2 transition-all hover:scale-125 ${
+                          drawColor === color ? 'border-white scale-125' : 'border-transparent'
+                        }`}
+                        style={{ backgroundColor: color }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {selectedTool === 'agent' && (
+                <div className="pt-6 border-t border-white/5 animate-in fade-in zoom-in-95">
+                  <p className="text-[11px] font-black uppercase text-[#ff4654] tracking-[0.3em] mb-5">Select Agent</p>
+                  <div className="grid grid-cols-5 gap-3 max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
+                    {agents.map(agent => (
+                      <button
+                        key={agent.uuid}
+                        onClick={() => setSelectedAgent(agent)}
+                        className={`relative aspect-square rounded-xl transition-all ${
+                          selectedAgent?.uuid === agent.uuid ? 'bg-[#ff4654] ring-2 ring-[#ff4654] scale-105' : 'bg-white/5 hover:bg-white/10'
                         }`}
                       >
-                        <span className="text-lg">{tool.icon}</span>
-                        {tool.label}
+                        <img src={agent.displayIcon} className="p-1" alt="" />
                       </button>
                     ))}
                   </div>
                 </div>
+              )}
+            </div>
 
-                {/* Color Picker - Draw */}
-                {selectedTool === 'draw' && (
-                  <div className="bg-[#1a2332] border border-white/5 rounded-2xl p-4">
-                    <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em] mb-3">Pen Color</p>
-                    <div className="flex items-center gap-2">
-                      {['#ff4654', '#3b82f6', '#22c55e', '#eab308', '#ffffff'].map(color => (
-                        <button
-                          key={color}
-                          onClick={() => setDrawColor(color)}
-                          className={`w-9 h-9 rounded-full border-2 transition-all hover:scale-110 ${
-                            drawColor === color ? 'border-white scale-110 shadow-lg' : 'border-white/10'
-                          }`}
-                          style={{ backgroundColor: color }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
+            {/* Primary Action Buttons */}
+            <div className="flex flex-col gap-4">
+              <button 
+                onClick={clearCanvas}
+                className="w-full py-5 rounded-2xl bg-white/5 border border-white/10 font-black italic tracking-widest text-[11px] uppercase hover:bg-red-500/10 hover:border-red-500/30 transition-all active:scale-[0.98]"
+              >
+                Clear Plan
+              </button>
+              <button 
+                onClick={saveStrategy}
+                disabled={!selectedMap}
+                className="w-full group relative h-20 bg-[#ff4654] rounded-2xl overflow-hidden transition-all duration-300 active:scale-[0.98] disabled:opacity-30 disabled:grayscale shadow-xl shadow-[#ff4654]/10"
+              >
+                <span className="relative z-10 font-black italic tracking-[0.3em] text-[14px] uppercase">Export Operational Intel</span>
+                <div className="absolute inset-0 bg-white translate-y-20 group-hover:translate-y-0 transition-transform duration-500 opacity-20" />
+              </button>
+            </div>
+          </div>
 
-                {/* Agent Selector */}
-                {selectedTool === 'agent' && (
-                  <div className="bg-[#1a2332] border border-white/5 rounded-2xl p-4">
-                    <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em] mb-3">Select Agent</p>
-                    <div className="grid grid-cols-4 gap-1.5 max-h-[320px] overflow-y-auto pr-1">
-                      {agents.map(agent => (
-                        <button
-                          key={agent.uuid}
-                          onClick={() => setSelectedAgent(agent)}
-                          className={`flex flex-col items-center gap-1 p-1.5 rounded-lg border transition-all ${
-                            selectedAgent?.uuid === agent.uuid
-                              ? 'border-[#ff4654]/50 bg-[#ff4654]/10 ring-1 ring-[#ff4654]/20'
-                              : 'border-transparent hover:border-white/10 hover:bg-white/5'
-                          }`}
-                        >
-                          {agent.displayIcon && (
-                            <img src={agent.displayIcon} alt={agent.displayName} className="w-10 h-10 object-contain" />
-                          )}
-                          <span className="text-white text-[8px] font-bold truncate w-full text-center">{agent.displayName}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Tool Info */}
-                <div className="bg-[#1a2332] border border-white/5 rounded-2xl p-4">
-                  <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em] mb-2">Active Tool</p>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-2xl">
-                      {selectedTool === 'draw' ? '✏️' : selectedTool === 'smoke' ? '💨' : selectedTool === 'spike' ? '💣' : '🎭'}
-                    </span>
-                    <div>
-                      <p className="text-white font-bold text-sm capitalize">{selectedTool}</p>
-                      <p className="text-gray-500 text-[10px]">
-                        {selectedTool === 'draw' && 'Click & drag to draw paths'}
-                        {selectedTool === 'smoke' && 'Click to place smoke zone'}
-                        {selectedTool === 'spike' && 'Click to mark spike plant'}
-                        {selectedTool === 'agent' && (selectedAgent ? `Pinning: ${selectedAgent.displayName}` : 'Pick an agent above')}
-                      </p>
-                    </div>
-                  </div>
+          {/* RIGHT: DRAWING SECTION (Stays same size ratio) */}
+          <div className="relative">
+            {!selectedMap ? (
+              <div className="aspect-[16/10] bg-white/[0.02] border-2 border-dashed border-white/5 rounded-[3rem] flex flex-col items-center justify-center text-center p-12">
+                <div className="w-24 h-24 rounded-full bg-white/[0.02] border border-white/5 flex items-center justify-center mb-6">
+                  <span className="text-5xl opacity-10">🗺️</span>
                 </div>
-
-                {/* Actions */}
-                <div className="space-y-2">
-                  <button
-                    onClick={clearCanvas}
-                    className="w-full flex items-center justify-center gap-2 py-3 border border-white/10 text-gray-400 font-bold text-sm rounded-xl hover:bg-white/5 hover:text-white transition-all tracking-wider"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                    CLEAR ALL
-                  </button>
-                  <button
-                    onClick={saveStrategy}
-                    className="group relative w-full py-3.5 overflow-hidden rounded-xl font-bold text-sm text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#ff4654] to-[#ff6b6b]"></div>
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#ff6b6b] to-[#ff4654] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <span className="relative flex items-center justify-center gap-2 tracking-wider">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                      SAVE STRATEGY
-                    </span>
-                  </button>
-                </div>
+                <h3 className="text-xl font-black italic uppercase tracking-[0.2em] text-gray-700">Awaiting Target Selection</h3>
               </div>
-
-              {/* Right Side - Canvas */}
-              <div className="relative bg-[#1a2332] border border-white/5 rounded-2xl overflow-hidden">
-                {/* Map label */}
-                <div className="absolute top-3 left-3 z-10 flex items-center gap-2 bg-[#111823]/80 backdrop-blur-sm border border-white/10 rounded-lg px-3 py-1.5">
+            ) : (
+              <div className="relative bg-[#1a2332] border border-white/10 rounded-[3rem] overflow-hidden shadow-2xl backdrop-blur-2xl">
+                <div className="absolute top-8 left-8 z-10 flex items-center gap-4 bg-[#111823]/90 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-3 shadow-2xl">
+                  <div className="flex flex-col">
+                    <span className="text-[#ff4654] text-[8px] font-black tracking-[0.4em] uppercase mb-0.5">Location</span>
+                    <span className="text-white text-xl font-black italic tracking-widest uppercase">{selectedMap.displayName}</span>
+                  </div>
                   <div className="w-2 h-2 rounded-full bg-[#ff4654] animate-pulse"></div>
-                  <span className="text-white text-xs font-bold tracking-wider">{selectedMap.displayName}</span>
                 </div>
 
-                <div className="flex items-center justify-center p-2">
+                <div className="flex items-center justify-center p-6">
                   <canvas
                     ref={canvasRef}
                     onMouseDown={startDrawing}
                     onMouseMove={draw}
                     onMouseUp={stopDrawing}
                     onMouseLeave={stopDrawing}
-                    style={{
-                      maxWidth: '100%',
-                      maxHeight: '75vh',
-                      borderRadius: '0.75rem',
-                      cursor: selectedTool === 'draw' ? 'crosshair' : 'pointer',
-                      display: 'block'
-                    }}
+                    className="max-w-full max-h-[72vh] rounded-[2rem] shadow-2xl cursor-crosshair"
+                    style={{ display: 'block' }}
                   />
                 </div>
               </div>
-            </div>
+            )}
           </div>
-        )}
+
+        </div>
       </div>
     </div>
   );

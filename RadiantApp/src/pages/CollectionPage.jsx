@@ -130,7 +130,12 @@ function CollectionPage() {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background image */}
-      <img src="https://res.cloudinary.com/dc3erz7jd/image/upload/v1776654727/fade_ku3xfn.jpg" alt="" className="fixed inset-0 w-full h-full object-cover" style={{ zIndex: 0 }} />
+      <img 
+        src="https://res.cloudinary.com/dc3erz7jd/image/upload/v1776654727/fade_ku3xfn.jpg" 
+        alt="" 
+        className="fixed inset-0 w-full h-full object-cover" 
+        style={{ zIndex: 0 }} 
+      />
       <div className="fixed inset-0 bg-[#111823]/80" style={{ zIndex: 0 }} />
 
       <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-20">

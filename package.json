@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/angelkgithub/RadiantArmory/issues"
   },
-  "homepage": "https://github.com/angelkgithub/RadiantArmory#readme"
+  "homepage": "https://github.com/angelkgithub/RadiantArmory#readme",
+  "dependencies": {
+    "framer-motion": "^12.38.0"
+  }
 }

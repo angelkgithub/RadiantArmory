@@ -28,6 +28,22 @@ export default {
         'gradient-valorant': 'linear-gradient(135deg, #0F1419 0%, #1A1F2E 100%)',
         'gradient-accent': 'linear-gradient(135deg, #FF4655 0%, #FF6B7A 100%)',
       },
+      // --- ADD KEYFRAMES HERE ---
+      keyframes: {
+        'spin-slow': {
+          'from': { transform: 'rotate(0deg)' },
+          'to': { transform: 'rotate(360deg)' },
+        },
+        'pulse-slow': {
+          '0%, 100%': { opacity: '0.15' },
+          '50%': { opacity: '0.25' },
+        }
+      },
+      // --- ADD ANIMATIONS HERE ---
+      animation: {
+        'spin-slow': 'spin-slow 20s linear infinite',
+        'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
+      },
       transition: {
         valorant: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       },
