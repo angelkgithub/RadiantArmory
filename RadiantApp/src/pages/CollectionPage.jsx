@@ -136,22 +136,28 @@ function CollectionPage() {
       <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-20">
         <div className="w-full">
 
+          <div className="h-2" />
+
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ff4654]/10 border border-[#ff4654]/20 mb-4">
+            <div className="inline-flex items-center justify-center gap-2 px-6 py-1.5 rounded-full bg-[#ff4654]/10 border border-[#ff4654]/20 mb-4" style={{ minWidth: '120px' }}>
               <div className="w-2 h-2 rounded-full bg-[#ff4654] animate-pulse" />
               <span className="text-[#ff4654] text-sm font-medium tracking-wider uppercase">Collection</span>
             </div>
+            <div className="h-2" />
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-400 tracking-tight">
               MY COLLECTION
             </h1>
           </div>
 
+          <div className="h-3" />
+
           {/* Tab Buttons */}
-          <div className="flex justify-center gap-6 mb-12">
+          <div className="flex justify-center gap-6 mb-12 pb-4">
             <button
               onClick={() => setActiveTab('skins')}
-              className={`group relative px-14 py-5 rounded-2xl font-black text-base tracking-widest uppercase transition-all duration-400 overflow-hidden ${
+              style={{ minWidth: '220px' }}
+              className={`group relative px-24 py-5 rounded-2xl font-black text-base tracking-widest uppercase transition-all duration-400 overflow-hidden ${
                 activeTab === 'skins'
                   ? 'bg-gradient-to-br from-[#ff4654] via-[#ff5e6d] to-[#ff4654] text-white shadow-2xl shadow-[#ff4654]/30 scale-105 border-2 border-white/10'
                   : 'bg-[#1a2332] text-gray-500 border-2 border-white/5 hover:border-[#ff4654]/40 hover:text-white hover:shadow-lg hover:shadow-[#ff4654]/10'
@@ -173,7 +179,8 @@ function CollectionPage() {
             </button>
             <button
               onClick={() => setActiveTab('agents')}
-              className={`group relative px-14 py-5 rounded-2xl font-black text-base tracking-widest uppercase transition-all duration-400 overflow-hidden ${
+              style={{ minWidth: '220px' }}
+              className={`group relative px-24 py-5 rounded-2xl font-black text-base tracking-widest uppercase transition-all duration-400 overflow-hidden ${
                 activeTab === 'agents'
                   ? 'bg-gradient-to-br from-[#ff4654] via-[#ff5e6d] to-[#ff4654] text-white shadow-2xl shadow-[#ff4654]/30 scale-105 border-2 border-white/10'
                   : 'bg-[#1a2332] text-gray-500 border-2 border-white/5 hover:border-[#ff4654]/40 hover:text-white hover:shadow-lg hover:shadow-[#ff4654]/10'
@@ -195,35 +202,40 @@ function CollectionPage() {
             </button>
           </div>
 
+          <div className="h-2.5" />
+
           {/* =================== SKINS TAB =================== */}
           {activeTab === 'skins' && (
-            <div className="space-y-6 animate-[fadeIn_0.3s_ease-out]">
+            <div className="flex flex-col gap-6 animate-[fadeIn_0.3s_ease-out]">
 
               {/* Weapon Category Selector */}
-              <div className="grid grid-cols-4 sm:grid-cols-7 gap-3">
-                {weaponCategories.map(({ key, label, icon }) => (
-                  <button
-                    key={key}
-                    onClick={() => { setSelectedCategory(key); setSelectedWeaponId(null); setSelectedSkinIdx(0); setSelectedChromaIdx(0); setShowVideo(false); }}
-                    className={`group relative flex flex-col items-center justify-center gap-2 py-5 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all duration-300 ${
-                      selectedCategory === key
-                        ? 'bg-gradient-to-br from-[#ff4654] to-[#ff4654]/80 text-white shadow-lg shadow-[#ff4654]/25 scale-[1.03] border border-white/10'
-                        : 'bg-[#1a2332] text-gray-500 border border-white/5 hover:border-[#ff4654]/30 hover:text-white'
-                    }`}
-                  >
-                    <span className={`${selectedCategory === key ? 'text-white' : 'text-gray-500 group-hover:text-white'} transition-colors`}>{icon}</span>
-                    <span>{label}</span>
-                  </button>
-                ))}
+              <div className="flex justify-center">
+                <div className="grid grid-cols-4 sm:grid-cols-7 gap-2 sm:gap-4 w-full max-w-7xl">
+                  {weaponCategories.map(({ key, label, icon }) => (
+                    <button
+                      key={key}
+                      onClick={() => { setSelectedCategory(key); setSelectedWeaponId(null); setSelectedSkinIdx(0); setSelectedChromaIdx(0); setShowVideo(false); }}
+                      className={`group relative flex flex-col items-center justify-center gap-2 py-5 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all duration-300 ${
+                        selectedCategory === key
+                          ? 'bg-gradient-to-br from-[#ff4654] to-[#ff4654]/80 text-white shadow-lg shadow-[#ff4654]/25 scale-[1.03] border border-white/10'
+                          : 'bg-[#1a2332] text-gray-500 border border-white/5 hover:border-[#ff4654]/30 hover:text-white'
+                      }`}
+                    >
+                      <span className={`${selectedCategory === key ? 'text-white' : 'text-gray-500 group-hover:text-white'} transition-colors`}>{icon}</span>
+                      <span>{label}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Weapon Selector (individual weapons in category) */}
               {categoryWeapons.length > 0 && (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+                <div className="flex flex-wrap justify-center gap-3">
                   {categoryWeapons.map(w => (
                     <button
                       key={w.uuid}
                       onClick={() => { setSelectedWeaponId(w.uuid); setSelectedSkinIdx(0); setSelectedChromaIdx(0); setShowVideo(false); }}
+                      style={{ minWidth: '300px' }}
                       className={`flex items-center justify-center gap-3 px-4 py-4 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
                         selectedWeapon?.uuid === w.uuid
                           ? 'bg-[#ff4654]/15 text-[#ff4654] border border-[#ff4654]/40 shadow-md shadow-[#ff4654]/10'
@@ -241,7 +253,7 @@ function CollectionPage() {
 
               {/* 2-Column Skin Viewer */}
               {selectedWeapon && weaponSkins.length > 0 ? (
-                <div className="bg-[#1a2332]/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden">
+                <div className="bg-[#1a2332]/80 backdrop-blur-sm border border-white/5 rounded-2xl">
                   <div className="flex flex-col lg:flex-row">
                     {/* Left Column: Skin List */}
                     <div className="lg:w-[360px] xl:w-[400px] flex-shrink-0 border-b lg:border-b-0 lg:border-r border-white/5">
@@ -330,7 +342,8 @@ function CollectionPage() {
                         {videoUrl && (
                           <button
                             onClick={() => setShowVideo(v => !v)}
-                            className={`absolute top-4 right-4 z-20 flex items-center gap-3 px-8 py-4 rounded-2xl text-base font-black tracking-widest uppercase transition-all duration-300 ${
+                            style={{ minWidth: '120px' }}
+                            className={`absolute top-4 right-4 z-20 flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-base font-black tracking-widest uppercase transition-all duration-300 ${
                               showVideo
                                 ? 'bg-[#ff4654] text-white shadow-xl shadow-[#ff4654]/30'
                                 : 'bg-black/40 backdrop-blur-sm text-gray-300 border border-white/10 hover:border-[#ff4654]/40 hover:text-white'
@@ -360,16 +373,17 @@ function CollectionPage() {
 
                       {/* Chromas / Colorways */}
                       {currentChromas.length > 1 && (
-                        <div className="border-t border-white/5 p-5">
-                          <p className="text-xs text-gray-500 font-bold tracking-widest uppercase mb-3">Colorways</p>
-                          <div className="flex gap-3 flex-wrap">
+                        <div className="relative p-5 pt-2 -translate-x-[-30px] -translate-y-2 ">
+                          <div className="absolute left-0 right-0 top-0 -translate-y-[12px] border-t border-white/5"></div>
+                          <p className="text-xs text-gray-500 font-bold tracking-widest uppercase mb-3 -translate-y-2">Colorways</p>
+                          <div className="flex gap-3 flex-wrap pt-2">
                             {currentChromas.map((chroma, idx) => (
                               <button
                                 key={chroma.uuid}
                                 onClick={() => { setSelectedChromaIdx(idx); setShowVideo(false); }}
                                 className={`group relative rounded-xl overflow-hidden transition-all duration-200 ${
                                   selectedChromaIdx === idx
-                                    ? 'ring-2 ring-[#ff4654] ring-offset-2 ring-offset-[#1a2332] scale-105'
+                                    ? 'ring-2 ring-[#ff4654] ring-offset-2 ring-offset-[#1a2332] scale-[1.02])'
                                     : 'ring-1 ring-white/10 hover:ring-white/25'
                                 }`}
                                 title={chroma.displayName}
