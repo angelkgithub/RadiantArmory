@@ -9,10 +9,10 @@ export default function Header() {
       {/* Top accent line */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#ff4654]/50 to-transparent" />
       
-      <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="w-full pl-8 pr-4 lg:pl-10 lg:pr-6">
+        <div className="flex justify-between items-center h-16 px-6 lg:px-10">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity flex-shrink-0">
+          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity flex-shrink-0 translate-x-4">
             <div className="text-2xl font-bold text-[#ff4654] tracking-wider">
               RADIANT
             </div>
@@ -20,7 +20,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8 flex-1 justify-end mr-8">
+          <nav className="hidden md:flex items-center gap-8 flex-1 justify-end -translate-x-4">
             <Link 
               to="/quiz" 
               className="relative group text-white hover:text-[#ff4654] transition-colors font-bold text-xs tracking-wider uppercase"
